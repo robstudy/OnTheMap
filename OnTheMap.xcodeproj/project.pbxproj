@@ -7,11 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DF005F281C31963C009EA528 /* MapAndTableTabVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF005F271C31963C009EA528 /* MapAndTableTabVC.swift */; };
+		DF005F2A1C3197E8009EA528 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DF005F291C3197E8009EA528 /* Images.xcassets */; };
 		DF8626461C1E84C100554696 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF8626451C1E84C100554696 /* AppDelegate.swift */; };
-		DF8626481C1E84C100554696 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF8626471C1E84C100554696 /* ViewController.swift */; };
+		DF8626481C1E84C100554696 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF8626471C1E84C100554696 /* LoginVC.swift */; };
 		DF86264B1C1E84C100554696 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DF8626491C1E84C100554696 /* Main.storyboard */; };
 		DF86264D1C1E84C100554696 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DF86264C1C1E84C100554696 /* Assets.xcassets */; };
-		DF8626501C1E84C100554696 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DF86264E1C1E84C100554696 /* LaunchScreen.storyboard */; };
 		DF86265B1C1E84C100554696 /* OnTheMapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF86265A1C1E84C100554696 /* OnTheMapTests.swift */; };
 		DF8626661C1E84C100554696 /* OnTheMapUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF8626651C1E84C100554696 /* OnTheMapUITests.swift */; };
 /* End PBXBuildFile section */
@@ -34,12 +35,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		DF005F271C31963C009EA528 /* MapAndTableTabVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapAndTableTabVC.swift; sourceTree = "<group>"; };
+		DF005F291C3197E8009EA528 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		DF8626421C1E84C100554696 /* OnTheMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OnTheMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DF8626451C1E84C100554696 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		DF8626471C1E84C100554696 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		DF8626471C1E84C100554696 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		DF86264A1C1E84C100554696 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		DF86264C1C1E84C100554696 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		DF86264F1C1E84C100554696 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DF8626511C1E84C100554696 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DF8626561C1E84C100554696 /* OnTheMapTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OnTheMapTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DF86265A1C1E84C100554696 /* OnTheMapTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnTheMapTests.swift; sourceTree = "<group>"; };
@@ -98,11 +100,12 @@
 			isa = PBXGroup;
 			children = (
 				DF8626451C1E84C100554696 /* AppDelegate.swift */,
-				DF8626471C1E84C100554696 /* ViewController.swift */,
+				DF8626471C1E84C100554696 /* LoginVC.swift */,
+				DF005F271C31963C009EA528 /* MapAndTableTabVC.swift */,
 				DF8626491C1E84C100554696 /* Main.storyboard */,
 				DF86264C1C1E84C100554696 /* Assets.xcassets */,
-				DF86264E1C1E84C100554696 /* LaunchScreen.storyboard */,
 				DF8626511C1E84C100554696 /* Info.plist */,
+				DF005F291C3197E8009EA528 /* Images.xcassets */,
 			);
 			path = OnTheMap;
 			sourceTree = "<group>";
@@ -232,7 +235,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DF8626501C1E84C100554696 /* LaunchScreen.storyboard in Resources */,
+				DF005F2A1C3197E8009EA528 /* Images.xcassets in Resources */,
 				DF86264D1C1E84C100554696 /* Assets.xcassets in Resources */,
 				DF86264B1C1E84C100554696 /* Main.storyboard in Resources */,
 			);
@@ -259,7 +262,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DF8626481C1E84C100554696 /* ViewController.swift in Sources */,
+				DF8626481C1E84C100554696 /* LoginVC.swift in Sources */,
+				DF005F281C31963C009EA528 /* MapAndTableTabVC.swift in Sources */,
 				DF8626461C1E84C100554696 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -302,14 +306,6 @@
 				DF86264A1C1E84C100554696 /* Base */,
 			);
 			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		DF86264E1C1E84C100554696 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				DF86264F1C1E84C100554696 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -402,6 +398,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = OnTheMap/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ROB.OnTheMap;
@@ -413,6 +411,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = OnTheMap/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ROB.OnTheMap;
@@ -487,6 +487,7 @@
 				DF86266C1C1E84C100554696 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		DF86266D1C1E84C100554696 /* Build configuration list for PBXNativeTarget "OnTheMapTests" */ = {
 			isa = XCConfigurationList;
@@ -495,6 +496,7 @@
 				DF86266F1C1E84C100554696 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		DF8626701C1E84C100554696 /* Build configuration list for PBXNativeTarget "OnTheMapUITests" */ = {
 			isa = XCConfigurationList;
@@ -503,6 +505,7 @@
 				DF8626721C1E84C100554696 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
