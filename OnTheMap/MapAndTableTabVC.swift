@@ -7,8 +7,12 @@
 //
 
 import UIKit
+import MapKit
 
-class MapAndTableTabVC: UIViewController {
+class MapAndTableTabVC: UIViewController, MKMapViewDelegate {
+    
+    @IBOutlet weak var mapView: MKMapView!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
