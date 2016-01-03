@@ -24,6 +24,9 @@
                                 <state key="normal" title="Sign in with Facebook">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="faceBookLogin:" destination="BYZ-38-t0r" eventType="touchUpInside" id="P5X-yW-mtg"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pgU-PI-I2i">
                                 <rect key="frame" x="20" y="345" width="560" height="55"/>

@@ -16,7 +16,6 @@ class LoginVC : UIViewController, UITextViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        
         emailTextView.delegate = self
         passwordTextView.delegate = self
         passwordTextView.secureTextEntry = true
@@ -26,43 +25,6 @@ class LoginVC : UIViewController, UITextViewDelegate {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-    //MARK: - Action
-    
-    @IBAction func loginVerify(sender: UIButton) {
-        //Call the Udacity API
-        let request = NSMutableURLRequest(URL: NSURL(string: "https://www.udacity.com/api/session")!)
-        request.HTTPMethod = "POST"
-        request.addValue("application/json", forHTTPHeaderField: "Accept")
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.HTTPBody = "{\"udacity\": {\"username\": \"\(emailTextView.text)\", \"password\": \"\(passwordTextView.text)\"}}".dataUsingEncoding(NSUTF8StringEncoding)
-        let session = NSURLSession.sharedSession()
-        let task = session.dataTaskWithRequest(request) { data, response, error in
-            if error != nil { // Handle error…
-                return
-            }
-        let newData = data?.subdataWithRange(NSMakeRange(5, (data?.length)! - 5)) /* subset response data! */
-            
-        if let errorText = String(data: newData!, encoding: NSUTF8StringEncoding) where errorText.rangeOfString("403") != nil {
-            //Place call in main thread and present a UIAlertController
-            NSOperationQueue.mainQueue().addOperationWithBlock {
-                let alert = UIAlertController(title: "Invalid Information", message: "There was something wrong with your input Email/Password", preferredStyle: .Alert)
-                let OkAction = UIAlertAction(title: "OK", style: .Default){(action) in
-                    self.dismissViewControllerAnimated(true, completion: nil)
-                }
-                alert.addAction(OkAction)
-                self.presentViewController(alert, animated: true, completion: nil)
-            }
-        } else {
-            NSOperationQueue.mainQueue().addOperationWithBlock {
-            self.performSegueWithIdentifier("showTabC", sender: sender)
-            }
-            }
-            print(NSString(data: newData!, encoding: NSUTF8StringEncoding))
-        }
-        task.resume()
-    }
-    
     
     //MARK: - UITextViewDelegate
     
@@ -80,5 +42,59 @@ class LoginVC : UIViewController, UITextViewDelegate {
         }
     }
 
+    //MARK: - IBActions
+    
+    @IBAction func loginVerify(sender: UIButton) {
+        
+        //Call the Udacity API
+        let request = NSMutableURLRequest(URL: NSURL(string: "https://www.udacity.com/api/session")!)
+        request.HTTPMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.HTTPBody = "{\"udacity\": {\"username\": \"\(emailTextView.text)\", \"password\": \"\(passwordTextView.text)\"}}".dataUsingEncoding(NSUTF8StringEncoding)
+        
+        //Session
+        let session = NSURLSession.sharedSession()
+        let task = session.dataTaskWithRequest(request) { data, response, error in
+            //Handle Error if Unable to Connect
+            if error != nil {
+                //Place UIAlertController on mainthread to prevent crashing
+                NSOperationQueue.mainQueue().addOperationWithBlock{
+                    let noConnectionAlert = UIAlertController(title: "Oh No!", message: "Unable to Connect to the Internet", preferredStyle: .Alert)
+                    let okPress = UIAlertAction(title: "OK", style: .Default){(action) in
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                    }
+                    noConnectionAlert.addAction(okPress)
+                    self.presentViewController(noConnectionAlert, animated: true, completion: nil)
+                    return
+                }
+            }
+            
+            guard let newData = data?.subdataWithRange(NSMakeRange(5, (data?.length)! - 5)) else {
+                return
+            }
+            
+            //Perform the error check on the main thread or there will be an error in attempting to present a new UIViewController/AlertViewController
+            NSOperationQueue.mainQueue().addOperationWithBlock {
+                if let errorText = String(data: newData, encoding: NSUTF8StringEncoding) where errorText.rangeOfString("403") != nil {
+                    //Show invalid info alerty when 403 error occures
+                    let alert = UIAlertController(title: "Invalid Information", message: "There was something wrong with your input Email/Password", preferredStyle: .Alert)
+                    let OkAction = UIAlertAction(title: "OK", style: .Default){(action) in
+                        self.dismissViewControllerAnimated(true, completion: nil)
+                    }
+                    alert.addAction(OkAction)
+                    self.presentViewController(alert, animated: true, completion: nil)
+                } else {
+                    self.performSegueWithIdentifier("showTabC", sender: self)
+                }
+            }
+            print(NSString(data: newData, encoding: NSUTF8StringEncoding))
+        }
+        task.resume()
+    }
+    
+    @IBAction func faceBookLogin(sender: UIButton) {
+        
+    }
 }
 
