@@ -111,15 +111,21 @@
             </objects>
             <point key="canvasLocation" x="827" y="-311"/>
         </scene>
-        <!--Map And Table TabVC-->
+        <!--On The Map-->
         <scene sceneID="Hzt-RY-znM">
             <objects>
-                <viewController id="JDs-jJ-nTO" customClass="MapAndTableTabVC" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="JDs-jJ-nTO" customClass="MapVC" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
                     <mapView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" id="ot9-5p-D06">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     </mapView>
-                    <navigationItem key="navigationItem" id="V01-g6-wDI"/>
+                    <navigationItem key="navigationItem" title="On The Map" id="LRF-Rf-GtA">
+                        <barButtonItem key="leftBarButtonItem" title="Logout" id="c5l-uJ-eSR">
+                            <connections>
+                                <action selector="logout:" destination="JDs-jJ-nTO" id="yKV-kl-X25"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="mapView" destination="ot9-5p-D06" id="HW9-dK-fQ9"/>
                     </connections>
@@ -146,19 +152,57 @@
             </objects>
             <point key="canvasLocation" x="827" y="362"/>
         </scene>
-        <!--Item-->
+        <!--List-->
         <scene sceneID="kQa-zB-y9Q">
             <objects>
                 <navigationController id="Fxv-Bs-mz6" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="TNw-f9-zEG"/>
+                    <tabBarItem key="tabBarItem" title="List" id="TNw-f9-zEG"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="fXT-wR-vT6">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
+                    <connections>
+                        <segue destination="0Ef-8W-aDR" kind="relationship" relationship="rootViewController" id="lKj-BG-KSj"/>
+                    </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2gT-Kp-Ycn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="827" y="1070"/>
+        </scene>
+        <!--On The Map-->
+        <scene sceneID="4fN-1a-aRc">
+            <objects>
+                <tableViewController id="0Ef-8W-aDR" customClass="ListVC" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="nup-ta-ESj">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="tabBar" id="uHC-ia-4vK">
+                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uHC-ia-4vK" id="vh1-LE-E73">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="0Ef-8W-aDR" id="7iA-ww-ybd"/>
+                            <outlet property="delegate" destination="0Ef-8W-aDR" id="Qj8-he-sJq"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="On The Map" id="nRU-GG-roB">
+                        <barButtonItem key="leftBarButtonItem" title="Logout" id="ubt-g2-C4h">
+                            <connections>
+                                <action selector="logout:" destination="0Ef-8W-aDR" id="5zw-Md-NhZ"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="YLA-NU-Cqo" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1555" y="1070"/>
         </scene>
     </scenes>
 </document>
