@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0qT-W8-Io1">
-                                <rect key="frame" x="20" y="510" width="560" height="55"/>
+                                <rect key="frame" x="20" y="535" width="560" height="30"/>
                                 <color key="backgroundColor" red="0.1098039299" green="0.39607846740000002" blue="0.74901962280000001" alpha="1" colorSpace="deviceRGB"/>
                                 <state key="normal" title="Sign in with Facebook">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -29,7 +29,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pgU-PI-I2i">
-                                <rect key="frame" x="20" y="345" width="560" height="55"/>
+                                <rect key="frame" x="20" y="307" width="560" height="30"/>
                                 <color key="backgroundColor" red="0.9803922176361084" green="0.43529415130615234" blue="0.13333334028720856" alpha="1" colorSpace="deviceRGB"/>
                                 <state key="normal" title="Login">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -38,43 +38,42 @@
                                     <action selector="loginVerify:" destination="BYZ-38-t0r" eventType="touchUpInside" id="tVR-rT-WS4"/>
                                 </connections>
                             </button>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" directionalLockEnabled="YES" scrollEnabled="NO" text="Email" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="qDr-iF-m4X">
-                                <rect key="frame" x="20" y="205" width="560" height="55"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.59999999999999998" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="55" id="ZwA-an-9wH"/>
-                                </constraints>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Email" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="o25-pV-qxl">
+                                <rect key="frame" x="20" y="205" width="560" height="36"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="no" enablesReturnKeyAutomatically="YES"/>
-                            </textView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" text="Password" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="o3A-Fk-NIh">
-                                <rect key="frame" x="20" y="275" width="560" height="55"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.59999999999999998" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Password" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="KJt-Ly-LWp">
+                                <rect key="frame" x="20" y="256" width="560" height="36"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="no" enablesReturnKeyAutomatically="YES" secureTextEntry="YES"/>
-                            </textView>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES" secureTextEntry="YES"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" red="1" green="0.50196081399917603" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="leadingMargin" secondItem="0qT-W8-Io1" secondAttribute="leading" id="1SQ-S2-ukJ"/>
-                            <constraint firstAttribute="leadingMargin" secondItem="qDr-iF-m4X" secondAttribute="leading" id="5sf-kz-cQY"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="qDr-iF-m4X" secondAttribute="trailing" id="7jK-pJ-1zD"/>
-                            <constraint firstItem="o3A-Fk-NIh" firstAttribute="height" secondItem="qDr-iF-m4X" secondAttribute="height" id="BaN-bx-BiK"/>
-                            <constraint firstItem="qDr-iF-m4X" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="185" id="Chb-Qp-gxF"/>
                             <constraint firstItem="0qT-W8-Io1" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="15" id="D2P-Ru-WKz"/>
-                            <constraint firstItem="pgU-PI-I2i" firstAttribute="top" secondItem="o3A-Fk-NIh" secondAttribute="bottom" constant="15" id="Dlr-PP-8ZF"/>
                             <constraint firstAttribute="trailingMargin" secondItem="0qT-W8-Io1" secondAttribute="trailing" id="Fye-DB-63e"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="o3A-Fk-NIh" secondAttribute="trailing" id="SBL-3P-Z0H"/>
-                            <constraint firstAttribute="leadingMargin" secondItem="o3A-Fk-NIh" secondAttribute="leading" id="VZz-hA-q9S"/>
-                            <constraint firstItem="o3A-Fk-NIh" firstAttribute="height" secondItem="pgU-PI-I2i" secondAttribute="height" id="aK0-Fb-s5L"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="KJt-Ly-LWp" secondAttribute="leading" id="JZL-fH-CgC"/>
+                            <constraint firstItem="KJt-Ly-LWp" firstAttribute="width" secondItem="o25-pV-qxl" secondAttribute="width" id="KlB-vx-EZP"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="0qT-W8-Io1" secondAttribute="bottom" constant="35" id="dST-mr-G2T"/>
+                            <constraint firstItem="pgU-PI-I2i" firstAttribute="top" secondItem="KJt-Ly-LWp" secondAttribute="bottom" constant="15" id="dg6-Z0-El9"/>
                             <constraint firstItem="0qT-W8-Io1" firstAttribute="height" secondItem="pgU-PI-I2i" secondAttribute="height" id="gEp-1H-JvD"/>
                             <constraint firstItem="0qT-W8-Io1" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" constant="15" id="iBa-0s-XJ0"/>
-                            <constraint firstItem="o3A-Fk-NIh" firstAttribute="top" secondItem="qDr-iF-m4X" secondAttribute="bottom" constant="15" id="l83-x3-6Dw"/>
+                            <constraint firstItem="o25-pV-qxl" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="185" id="jO4-f1-U4M"/>
                             <constraint firstAttribute="leadingMargin" secondItem="pgU-PI-I2i" secondAttribute="leading" id="qNI-cG-Teu"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="o25-pV-qxl" secondAttribute="trailing" id="r7D-UM-7gj"/>
+                            <constraint firstItem="KJt-Ly-LWp" firstAttribute="top" secondItem="o25-pV-qxl" secondAttribute="bottom" constant="15" id="rQF-vq-Upd"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="o25-pV-qxl" secondAttribute="leading" id="uPi-um-Wy2"/>
                             <constraint firstItem="0qT-W8-Io1" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="490" id="wnZ-fa-S0C"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="KJt-Ly-LWp" secondAttribute="trailing" id="x73-Bp-ppa"/>
+                            <constraint firstItem="o25-pV-qxl" firstAttribute="height" secondItem="KJt-Ly-LWp" secondAttribute="height" id="yCg-mT-NzB"/>
                             <constraint firstAttribute="trailingMargin" secondItem="pgU-PI-I2i" secondAttribute="trailing" id="yEh-PL-bTb"/>
                         </constraints>
                         <variation key="default">
@@ -86,8 +85,8 @@
                         </variation>
                     </view>
                     <connections>
-                        <outlet property="emailTextView" destination="qDr-iF-m4X" id="O1U-Tj-SGw"/>
-                        <outlet property="passwordTextView" destination="o3A-Fk-NIh" id="qbd-DS-1Sg"/>
+                        <outlet property="emailTextField" destination="o25-pV-qxl" id="ySc-tj-YPl"/>
+                        <outlet property="passwordTextField" destination="KJt-Ly-LWp" id="xjT-zY-U0H"/>
                         <segue destination="zxK-CS-6l6" kind="presentation" identifier="showTabC" id="FLx-fB-MfT"/>
                     </connections>
                 </viewController>
