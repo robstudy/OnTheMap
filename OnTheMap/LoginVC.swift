@@ -12,6 +12,7 @@ class LoginVC : UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
+    let udacityAPI = UdacityAPI()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,6 +49,30 @@ class LoginVC : UIViewController, UITextFieldDelegate {
         guard let passwordText = passwordTextField.text else {
             return
         }
+        
+        let okPress = UIAlertAction(title: "OK", style: .Default) {(action) in
+            self.dismissViewControllerAnimated(true, completion: nil)
+        }
+        
+        udacityAPI.setErrorChecks(apiCallError: false, internetConnectionError: false)
+        udacityAPI.startSession(eText: emailText, pText: passwordText)
+        sleep(2)
+        if udacityAPI.checkForInternetConnectionError() == true {
+            let noConnectionAlert = UIAlertController(title: "Oh No!", message: udacityAPI.errorString, preferredStyle: .Alert)
+            noConnectionAlert.addAction(okPress)
+            self.presentViewController(noConnectionAlert, animated: true, completion: nil)
+            return
+        } else if udacityAPI.checkForApiCallError() == true {
+            let alert = UIAlertController(title: "Invalid Information", message: udacityAPI.errorString, preferredStyle: .Alert)
+            alert.addAction(okPress)
+            self.presentViewController(alert, animated: true, completion: nil)
+            return
+        } else if udacityAPI.checkForApiCallError() == false && udacityAPI.checkForInternetConnectionError() == false {
+            self.performSegueWithIdentifier("showTabC", sender: self)
+        }
+    }
+    
+        /*
         //Call the Udacity API
         let request = NSMutableURLRequest(URL: NSURL(string: "https://www.udacity.com/api/session")!)
         request.HTTPMethod = "POST"
@@ -99,7 +124,7 @@ class LoginVC : UIViewController, UITextFieldDelegate {
             print(NSString(data: newData, encoding: NSUTF8StringEncoding))
         }
         task.resume()
-    }
+    } */
     
     @IBAction func faceBookLogin(sender: UIButton) {
         
