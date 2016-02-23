@@ -17,6 +17,8 @@
 		DF86264D1C1E84C100554696 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DF86264C1C1E84C100554696 /* Assets.xcassets */; };
 		DF86265B1C1E84C100554696 /* OnTheMapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF86265A1C1E84C100554696 /* OnTheMapTests.swift */; };
 		DF8626661C1E84C100554696 /* OnTheMapUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF8626651C1E84C100554696 /* OnTheMapUITests.swift */; };
+		DFF9A8661C7627990092D61B /* ParseAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFF9A8651C7627990092D61B /* ParseAPI.swift */; };
+		DFF9A86A1C7B5D560092D61B /* Student.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFF9A8691C7B5D560092D61B /* Student.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +55,8 @@
 		DF8626611C1E84C100554696 /* OnTheMapUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OnTheMapUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DF8626651C1E84C100554696 /* OnTheMapUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnTheMapUITests.swift; sourceTree = "<group>"; };
 		DF8626671C1E84C100554696 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DFF9A8651C7627990092D61B /* ParseAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseAPI.swift; sourceTree = "<group>"; };
+		DFF9A8691C7B5D560092D61B /* Student.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Student.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,14 +84,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		DF046FD91C42FDBC00E0EB92 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				DF046FDA1C42FEEE00E0EB92 /* UdacityAPI.swift */,
-			);
-			name = Models;
-			sourceTree = "<group>";
-		};
 		DF8626391C1E84C100554696 = {
 			isa = PBXGroup;
 			children = (
@@ -111,7 +107,9 @@
 		DF8626441C1E84C100554696 /* OnTheMap */ = {
 			isa = PBXGroup;
 			children = (
-				DF046FD91C42FDBC00E0EB92 /* Models */,
+				DF046FDA1C42FEEE00E0EB92 /* UdacityAPI.swift */,
+				DFF9A8651C7627990092D61B /* ParseAPI.swift */,
+				DFF9A8691C7B5D560092D61B /* Student.swift */,
 				DF8626451C1E84C100554696 /* AppDelegate.swift */,
 				DF8626471C1E84C100554696 /* LoginVC.swift */,
 				DF005F271C31963C009EA528 /* MapVC.swift */,
@@ -280,6 +278,8 @@
 				DF8626481C1E84C100554696 /* LoginVC.swift in Sources */,
 				DF005F281C31963C009EA528 /* MapVC.swift in Sources */,
 				DF8626461C1E84C100554696 /* AppDelegate.swift in Sources */,
+				DFF9A8661C7627990092D61B /* ParseAPI.swift in Sources */,
+				DFF9A86A1C7B5D560092D61B /* Student.swift in Sources */,
 				DF046FDB1C42FEEE00E0EB92 /* UdacityAPI.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -475,6 +475,7 @@
 		DF8626721C1E84C100554696 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				"CODE_SIGN_ENTITLEMENTS[sdk=iphoneos*]" = "";
 				INFOPLIST_FILE = OnTheMapUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ROB.OnTheMapUITests;

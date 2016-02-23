@@ -1,0 +1,41 @@
+//
+//  Student.swift
+//  OnTheMap
+//
+//  Created by Robert Garza on 2/22/16.
+//  Copyright © 2016 Robert Garza. All rights reserved.
+//
+
+import Foundation
+
+struct Student {
+    
+    let uniqueKey: String
+    let firstName: String
+    let lastName: String
+    var mediaURL: String
+    let latitude: Double
+    let longitude: Double
+    let mapString: String
+    
+    
+    init(uniqueKey: String) {
+        self.uniqueKey = uniqueKey
+        firstName = ""
+        lastName = ""
+        mediaURL = ""
+        latitude = 0
+        longitude = 0
+        mapString = ""
+    }
+    
+    init(uniqueKey: String, firstName: String, lastName: String, mediaURL: String, latitude: Double, longitude: Double, mapString: String){
+        self.uniqueKey = uniqueKey
+        self.firstName = firstName
+        self.lastName = lastName
+        self.mediaURL = mediaURL
+        self.latitude = latitude
+        self.longitude = longitude
+        self.mapString = mapString
+    }
+}

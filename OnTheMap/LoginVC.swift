@@ -25,6 +25,7 @@ class LoginVC : UIViewController, UITextFieldDelegate {
         configureBackground()
         buttonLayout()
         setTextViews()
+        ParseAPI.sharedInstance().getStudentData()
     }
     
     override func viewWillAppear(animated: Bool) {

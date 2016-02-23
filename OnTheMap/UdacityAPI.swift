@@ -9,20 +9,19 @@
 import Foundation
 import UIKit
 
+//MARK: Singleton
 private let sharedUdacity = UdacityAPI()
 
-class UdacityAPI : NSObject {
+class UdacityAPI {
     
-    var session = NSURLSession.sharedSession()
-    var loginController: UIViewController?
+    private var session = NSURLSession.sharedSession()
+    private var loginController: UIViewController?
     
-    override init(){
-        super.init()
-    }
+    let udacityURLString = "https://www.udacity.com/api/session"
     
     //Call Session
     func startSession(eText emailText: String, pText passwordText: String, loginController: UIViewController) {
-        let request = NSMutableURLRequest(URL: NSURL(string: "https://www.udacity.com/api/session")!)
+        let request = NSMutableURLRequest(URL: NSURL(string: udacityURLString)!)
         request.HTTPMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -50,25 +49,22 @@ class UdacityAPI : NSObject {
             print(NSString(data: newData, encoding: NSUTF8StringEncoding))
             
             if let dataText = String(data: newData, encoding: NSUTF8StringEncoding) {
-                if dataText.rangeOfString("403") != nil {
-                    self.showAlert(self.loginController!, alertMessage: "error: There was something wrong with your input Email/Password" )
-                    return
-                } else if (dataText.rangeOfString("true") != nil) {
+                if (dataText.rangeOfString("true") != nil) {
                     dispatch_async(dispatch_get_main_queue(), {
                         self.loginController!.performSegueWithIdentifier("showTabC", sender: self)
                     })
                 } else {
-                    self.showAlert(self.loginController!, alertMessage: dataText)
+                    self.showAlert(self.loginController!, alertMessage: "Invalid user credentials")
                 }
             }
         })
         task.resume()
     }
     
-    //Logout
+    //MARK: Logout
     
     func logOut() {
-        let request = NSMutableURLRequest(URL: NSURL(string: "https://www.udacity.com/api/session")!)
+        let request = NSMutableURLRequest(URL: NSURL(string: udacityURLString)!)
         request.HTTPMethod = "DELETE"
         var xsrfCookie: NSHTTPCookie? = nil
         let sharedCookieStorage = NSHTTPCookieStorage.sharedHTTPCookieStorage()
