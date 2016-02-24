@@ -81,7 +81,7 @@ class MapVC: UIViewController, MKMapViewDelegate {
                 if UIApplication.sharedApplication().canOpenURL(mediaURL) {
                     UIApplication.sharedApplication().openURL(mediaURL)
                 } else {
-                    //Display AlertView
+                    showAlert()
                 }
             }
         }
@@ -95,4 +95,18 @@ class MapVC: UIViewController, MKMapViewDelegate {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
 
+}
+
+extension MapVC {
+    private func showAlert() {
+        let okPress = UIAlertAction(title: "OK", style: .Default) {(action) in
+            return
+        }
+        
+        dispatch_async(dispatch_get_main_queue(), {
+            let noConnectionAlert = UIAlertController(title: "Oh No!", message: "Invalid URL", preferredStyle: .Alert)
+            noConnectionAlert.addAction(okPress)
+            self.presentViewController(noConnectionAlert, animated: true, completion: nil)
+        })
+    }
 }

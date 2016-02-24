@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		DF005F281C31963C009EA528 /* MapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF005F271C31963C009EA528 /* MapVC.swift */; };
 		DF005F2A1C3197E8009EA528 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DF005F291C3197E8009EA528 /* Images.xcassets */; };
+		DF007E921C7E0CB700DFFBD0 /* PostVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF007E911C7E0CB700DFFBD0 /* PostVC.swift */; };
 		DF046FDB1C42FEEE00E0EB92 /* UdacityAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF046FDA1C42FEEE00E0EB92 /* UdacityAPI.swift */; };
 		DF6AD1EB1C3A544B00575C83 /* ListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6AD1EA1C3A544B00575C83 /* ListVC.swift */; };
 		DF8626461C1E84C100554696 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF8626451C1E84C100554696 /* AppDelegate.swift */; };
@@ -42,6 +43,7 @@
 /* Begin PBXFileReference section */
 		DF005F271C31963C009EA528 /* MapVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapVC.swift; sourceTree = "<group>"; };
 		DF005F291C3197E8009EA528 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		DF007E911C7E0CB700DFFBD0 /* PostVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostVC.swift; sourceTree = "<group>"; };
 		DF046FDA1C42FEEE00E0EB92 /* UdacityAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityAPI.swift; sourceTree = "<group>"; };
 		DF6AD1EA1C3A544B00575C83 /* ListVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListVC.swift; sourceTree = "<group>"; };
 		DF8626421C1E84C100554696 /* OnTheMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OnTheMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -116,11 +118,12 @@
 				DF8626471C1E84C100554696 /* LoginVC.swift */,
 				DF005F271C31963C009EA528 /* MapVC.swift */,
 				DF6AD1EA1C3A544B00575C83 /* ListVC.swift */,
+				DFF9A86B1C7CB0A10092D61B /* StudentTableCell.swift */,
+				DF007E911C7E0CB700DFFBD0 /* PostVC.swift */,
 				DF8626491C1E84C100554696 /* Main.storyboard */,
 				DF86264C1C1E84C100554696 /* Assets.xcassets */,
 				DF8626511C1E84C100554696 /* Info.plist */,
 				DF005F291C3197E8009EA528 /* Images.xcassets */,
-				DFF9A86B1C7CB0A10092D61B /* StudentTableCell.swift */,
 			);
 			path = OnTheMap;
 			sourceTree = "<group>";
@@ -283,6 +286,7 @@
 				DF005F281C31963C009EA528 /* MapVC.swift in Sources */,
 				DF8626461C1E84C100554696 /* AppDelegate.swift in Sources */,
 				DFF9A8661C7627990092D61B /* ParseAPI.swift in Sources */,
+				DF007E921C7E0CB700DFFBD0 /* PostVC.swift in Sources */,
 				DFF9A86A1C7B5D560092D61B /* Student.swift in Sources */,
 				DF046FDB1C42FEEE00E0EB92 /* UdacityAPI.swift in Sources */,
 			);

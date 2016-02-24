@@ -13,8 +13,10 @@ class StudentTableCell: UITableViewCell {
     //MARK: Outlets
 
     @IBOutlet weak var nameLabel: UITextView!
+    @IBOutlet weak var urlLabel: UITextView!
     
     func configureStudentCell(studentData: Student) {
         nameLabel.text = studentData.firstName + " " + studentData.lastName
+        urlLabel.text = studentData.mediaURL
     }
 }

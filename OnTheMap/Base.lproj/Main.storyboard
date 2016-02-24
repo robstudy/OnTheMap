@@ -238,9 +238,12 @@
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tPR-b8-lO6">
-                                            <rect key="frame" x="113" y="0.0" width="409" height="35"/>
+                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tPR-b8-lO6">
+                                            <rect key="frame" x="113" y="0.0" width="409" height="25"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="25" id="iOh-3E-bx4"/>
+                                            </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                         </textView>
@@ -254,22 +257,34 @@
                                                 <constraint firstAttribute="width" constant="50" id="FO0-bC-NhT"/>
                                             </constraints>
                                         </imageView>
+                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RB7-OP-rgs">
+                                            <rect key="frame" x="113" y="23" width="409" height="20"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="20" id="KiU-ba-x9Q"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                        </textView>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="aSz-BO-s75" firstAttribute="top" secondItem="tPR-b8-lO6" secondAttribute="top" id="8tz-Q3-ZI7"/>
+                                        <constraint firstItem="tPR-b8-lO6" firstAttribute="top" secondItem="mMR-J0-JoI" secondAttribute="top" id="00t-gD-syy"/>
+                                        <constraint firstItem="RB7-OP-rgs" firstAttribute="leading" secondItem="aSz-BO-s75" secondAttribute="trailing" constant="45" id="BFG-JU-dMs"/>
+                                        <constraint firstAttribute="bottom" secondItem="RB7-OP-rgs" secondAttribute="bottom" id="Gm8-nu-4s0"/>
+                                        <constraint firstItem="RB7-OP-rgs" firstAttribute="trailing" secondItem="tPR-b8-lO6" secondAttribute="trailing" id="LuQ-XD-ffI"/>
                                         <constraint firstItem="aSz-BO-s75" firstAttribute="leading" secondItem="eCB-Fe-3YR" secondAttribute="leadingMargin" constant="10" id="O9q-qF-J1u"/>
                                         <constraint firstItem="aSz-BO-s75" firstAttribute="trailing" secondItem="mMR-J0-JoI" secondAttribute="trailing" id="Qcp-oF-pR0"/>
                                         <constraint firstItem="aSz-BO-s75" firstAttribute="bottom" secondItem="mMR-J0-JoI" secondAttribute="bottom" id="Stv-Ug-axa"/>
                                         <constraint firstItem="aSz-BO-s75" firstAttribute="top" secondItem="eCB-Fe-3YR" secondAttribute="top" id="aot-CG-TXu"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="tPR-b8-lO6" secondAttribute="trailing" constant="70" id="dsr-nI-w7u"/>
                                         <constraint firstItem="aSz-BO-s75" firstAttribute="leading" secondItem="mMR-J0-JoI" secondAttribute="leading" id="fV9-Ai-IbR"/>
-                                        <constraint firstItem="tPR-b8-lO6" firstAttribute="leading" secondItem="aSz-BO-s75" secondAttribute="trailing" constant="45" id="uem-WS-hlN"/>
-                                        <constraint firstItem="tPR-b8-lO6" firstAttribute="bottom" secondItem="eCB-Fe-3YR" secondAttribute="bottomMargin" id="zqx-Pl-oMr"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="RB7-OP-rgs" secondAttribute="trailing" constant="70" id="nsf-w7-f0B"/>
+                                        <constraint firstItem="RB7-OP-rgs" firstAttribute="leading" secondItem="tPR-b8-lO6" secondAttribute="leading" id="sZy-wi-PtU"/>
                                         <constraint firstItem="aSz-BO-s75" firstAttribute="top" secondItem="mMR-J0-JoI" secondAttribute="top" id="zyQ-VU-bTe"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="nameLabel" destination="tPR-b8-lO6" id="2Tq-y1-GIm"/>
+                                    <outlet property="urlLabel" destination="RB7-OP-rgs" id="8RA-ie-Sgv"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -290,6 +305,23 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YLA-NU-Cqo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1555" y="1070"/>
+        </scene>
+        <!--PostVC-->
+        <scene sceneID="Zby-1j-zxc">
+            <objects>
+                <viewController id="cJm-L6-fs4" customClass="PostVC" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Pja-aU-zS5"/>
+                        <viewControllerLayoutGuide type="bottom" id="EsP-ub-q0V"/>
+                    </layoutGuides>
+                    <stackView key="view" opaque="NO" contentMode="scaleToFill" axis="vertical" id="uWD-9C-2fN">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    </stackView>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nHC-Y2-jGb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="827" y="1826"/>
         </scene>
     </scenes>
     <resources>
