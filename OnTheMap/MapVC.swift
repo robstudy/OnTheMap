@@ -80,6 +80,8 @@ class MapVC: UIViewController, MKMapViewDelegate {
             if let mediaURL = NSURL(string: ((view.annotation?.subtitle)!)!) {
                 if UIApplication.sharedApplication().canOpenURL(mediaURL) {
                     UIApplication.sharedApplication().openURL(mediaURL)
+                } else {
+                    //Display AlertView
                 }
             }
         }

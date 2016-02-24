@@ -19,6 +19,7 @@
 		DF8626661C1E84C100554696 /* OnTheMapUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF8626651C1E84C100554696 /* OnTheMapUITests.swift */; };
 		DFF9A8661C7627990092D61B /* ParseAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFF9A8651C7627990092D61B /* ParseAPI.swift */; };
 		DFF9A86A1C7B5D560092D61B /* Student.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFF9A8691C7B5D560092D61B /* Student.swift */; };
+		DFF9A86C1C7CB0A10092D61B /* StudentTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFF9A86B1C7CB0A10092D61B /* StudentTableCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +58,7 @@
 		DF8626671C1E84C100554696 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DFF9A8651C7627990092D61B /* ParseAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseAPI.swift; sourceTree = "<group>"; };
 		DFF9A8691C7B5D560092D61B /* Student.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Student.swift; sourceTree = "<group>"; };
+		DFF9A86B1C7CB0A10092D61B /* StudentTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentTableCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,6 +120,7 @@
 				DF86264C1C1E84C100554696 /* Assets.xcassets */,
 				DF8626511C1E84C100554696 /* Info.plist */,
 				DF005F291C3197E8009EA528 /* Images.xcassets */,
+				DFF9A86B1C7CB0A10092D61B /* StudentTableCell.swift */,
 			);
 			path = OnTheMap;
 			sourceTree = "<group>";
@@ -274,6 +277,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DFF9A86C1C7CB0A10092D61B /* StudentTableCell.swift in Sources */,
 				DF6AD1EB1C3A544B00575C83 /* ListVC.swift in Sources */,
 				DF8626481C1E84C100554696 /* LoginVC.swift in Sources */,
 				DF005F281C31963C009EA528 /* MapVC.swift in Sources */,
