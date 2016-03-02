@@ -28,6 +28,7 @@ class LoginVC : UIViewController, UITextFieldDelegate {
         ParseAPI.sharedInstance().getStudentData()
     }
     
+    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
 
@@ -44,7 +45,7 @@ class LoginVC : UIViewController, UITextFieldDelegate {
     
     //MARK: - Login Methods
     
-    @IBAction func loginVerify(sender: UIButton) {
+    @IBAction func loginVerify(sender: AnyObject) {
         guard let emailText = emailTextField.text else {
             return
         }

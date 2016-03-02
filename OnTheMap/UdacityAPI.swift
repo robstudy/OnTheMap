@@ -14,6 +14,8 @@ private let sharedUdacity = UdacityAPI()
 
 class UdacityAPI {
     
+    var studentKey: String = ""
+    
     private var session = NSURLSession.sharedSession()
     private var loginController: UIViewController?
     
@@ -43,9 +45,26 @@ class UdacityAPI {
                 return
             }
             
+            
             guard let newData = data?.subdataWithRange(NSMakeRange(5, (data?.length)! - 5)) else {
                 return
             }/*subset response data!*/
+            
+            guard let studentInfo = try? NSJSONSerialization.JSONObjectWithData(newData, options: .AllowFragments) as? NSDictionary else {
+                print("no student information")
+                return
+            }
+            
+            guard let getStudentKey = studentInfo!["account"]!["key"] as? String else {
+                print("No student key")
+                return
+            }
+            
+            self.studentKey = getStudentKey
+            
+            print(self.studentKey)
+            
+            
             print(NSString(data: newData, encoding: NSUTF8StringEncoding))
             
             if let dataText = String(data: newData, encoding: NSUTF8StringEncoding) {
@@ -81,6 +100,32 @@ class UdacityAPI {
             }
             let newData = data!.subdataWithRange(NSMakeRange(5, data!.length - 5)) /* subset response data! */
             print(NSString(data: newData, encoding: NSUTF8StringEncoding))
+        }
+        task.resume()
+    }
+    
+    //MARK: Get Data
+    func getUserData() {
+        let request = NSMutableURLRequest(URL: NSURL(string: "https://www.udacity.com/api/users/\(studentKey)")!)
+        let session = NSURLSession.sharedSession()
+        let task = session.dataTaskWithRequest(request) { data, response, error in
+            if error != nil { // Handle error...
+                print(error)
+                return
+            }
+            
+            guard let newData = data?.subdataWithRange(NSMakeRange(5, data!.length - 5)) else {
+                print("Can't get data")
+                return
+            }/* subset response data! */
+            
+            guard let studentArray = try? NSJSONSerialization.JSONObjectWithData(newData, options: .AllowFragments) as? NSDictionary else {
+                return
+            }
+            
+            print(studentArray)
+            
+            //print(NSString(data: newData, encoding: NSUTF8StringEncoding))
         }
         task.resume()
     }

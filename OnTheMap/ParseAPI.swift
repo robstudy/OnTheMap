@@ -33,7 +33,14 @@ class ParseAPI {
                 print("error")
                 return
             }
-            self.studentData = try! NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments) as! NSDictionary
+            
+            if data != nil {
+            do {
+                self.studentData = try NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments) as? NSDictionary
+            } catch (_) {
+                    print(error)
+                }
+            }
             
             self.parseStudentData()
         }

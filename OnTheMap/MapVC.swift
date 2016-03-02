@@ -13,39 +13,13 @@ class MapVC: UIViewController, MKMapViewDelegate {
     
     @IBOutlet weak var mapView: MKMapView!
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         mapView.delegate = self
-        
         //annotations for mapview
-        var annotations = [MKPointAnnotation]()
-        
-        for locations in ParseAPI.sharedInstance().studentArray {
-            
-            //get lon and lat values
-            let lat = CLLocationDegrees(locations.latitude)
-            let long = CLLocationDegrees(locations.longitude)
-            
-            let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
-            
-            let first = locations.firstName
-            let last = locations.lastName
-            let mediaURL = locations.mediaURL
-            
-            
-            //Create coordinate, title, and subtitle
-            let annotation = MKPointAnnotation()
-            annotation.coordinate = coordinate
-            annotation.title = "\(first) \(last)"
-            annotation.subtitle = mediaURL
-            
-            //Place in annotations array
-            annotations.append(annotation)
-        }
-        
-        //Add annotations to map
-        self.mapView.addAnnotations(annotations)
+        addPins()
     }
     
     
@@ -94,7 +68,15 @@ class MapVC: UIViewController, MKMapViewDelegate {
         
         self.dismissViewControllerAnimated(true, completion: nil)
     }
+    
+    @IBAction func postLocation(sender: UIBarButtonItem) {
+        self.performSegueWithIdentifier("PostVC", sender: self)
+    }
+    
 
+    @IBAction func refreshMap(sender: UIBarButtonItem) {
+        
+    }
 }
 
 extension MapVC {
@@ -108,5 +90,37 @@ extension MapVC {
             noConnectionAlert.addAction(okPress)
             self.presentViewController(noConnectionAlert, animated: true, completion: nil)
         })
+    }
+    
+    //MARK: Add Pins
+    private func addPins() {
+        //annotations for mapview
+        var annotations = [MKPointAnnotation]()
+        
+        for locations in ParseAPI.sharedInstance().studentArray {
+            
+            //get lon and lat values
+            let lat = CLLocationDegrees(locations.latitude)
+            let long = CLLocationDegrees(locations.longitude)
+            
+            let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
+            
+            let first = locations.firstName
+            let last = locations.lastName
+            let mediaURL = locations.mediaURL
+            
+            
+            //Create coordinate, title, and subtitle
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = coordinate
+            annotation.title = "\(first) \(last)"
+            annotation.subtitle = mediaURL
+            
+            //Place in annotations array
+            annotations.append(annotation)
+        }
+        
+        //Add annotations to map
+        mapView.addAnnotations(annotations)
     }
 }

@@ -18,5 +18,7 @@ class StudentTableCell: UITableViewCell {
     func configureStudentCell(studentData: Student) {
         nameLabel.text = studentData.firstName + " " + studentData.lastName
         urlLabel.text = studentData.mediaURL
+        urlLabel.scrollEnabled = false
+        nameLabel.scrollEnabled = false
     }
 }
