@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 private let sharedParse = ParseAPI()
 
@@ -20,10 +21,14 @@ class ParseAPI {
     let parseKeyIDField = "X-Parse-REST-API-Key"
     let parseUpdateString = "/8ZExGR5uX8"
     
-    var studentData: NSDictionary?
+    private var contextController: UIViewController?
+    
     var studentArray: [Student] = []
     
-    func getStudentData() {
+    func getStudentData(viewController: UIViewController) {
+        
+        contextController = viewController
+        
         let request = NSMutableURLRequest(URL: NSURL(string: parseURLString)!)
         request.addValue(parseID, forHTTPHeaderField: parseAppIDField)
         request.addValue(parseKey, forHTTPHeaderField: parseKeyIDField)
@@ -34,24 +39,104 @@ class ParseAPI {
                 return
             }
             
-            if data != nil {
-            do {
-                self.studentData = try NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments) as? NSDictionary
-            } catch (_) {
-                    print(error)
-                }
+            guard let studentData = try? NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments) as? NSDictionary else {
+                return
             }
             
-            self.parseStudentData()
+            self.parseStudentData(studentData!)
+
         }
         task.resume()
     }
     
+    //MARK: POST/PUT
+    private func postStudentData(studentInformation: Student, requestType: String, updateOldData: Bool, objectId: String?) {
+        var parseURL:String = ""
+        if updateOldData {
+            parseURL = parseURLString + objectId!
+        } else {
+            parseURL = parseURLString
+        }
+        let url = NSURL(string: parseURL)
+        let request = NSMutableURLRequest(URL: url!)
+        request.HTTPMethod = requestType
+        request.addValue(parseID, forHTTPHeaderField: parseAppIDField)
+        request.addValue(parseKey, forHTTPHeaderField: parseKeyIDField)
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.HTTPBody = "{\"uniqueKey\": \"\(studentInformation.uniqueKey)\", \"firstName\": \"\(studentInformation.firstName)\", \"lastName\": \"\(studentInformation.lastName)\",\"mapString\": \"\(studentInformation.mapString)\", \"mediaURL\": \"\(studentInformation.mediaURL)\",\"latitude\": \(studentInformation.latitude), \"longitude\": \(studentInformation.longitude)}".dataUsingEncoding(NSUTF8StringEncoding)
+        
+        let task = session.dataTaskWithRequest(request) { data, response, error in
+            if error != nil {
+                //handle error
+                return
+            }
+            print(NSString(data: data!, encoding: NSUTF8StringEncoding))
+            
+            guard let responseData = try? NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments) as? NSDictionary else {
+                return
+            }
+            
+            guard let containsError = responseData!["error"] else {
+                
+                let success = UIAlertAction(title: "Back to On The Map", style: .Default) {(action) in
+                    self.contextController?.dismissViewControllerAnimated(true, completion: nil)
+                }
+                
+                self.showAlert("Your location has been added.", header: "Success!", addButton: success, addCancelButton: false)
+                return
+            }
+            
+            self.showAlert(containsError as! String, header: "No URL input", addButton: nil, addCancelButton: true)
+        }
+        task.resume()
+    }
+    
+    func queryParse(studentKey: String, completion: (httpMethod: String, objId: String?) ->Void) {
+        let urlString = "https://api.parse.com/1/classes/StudentLocation?where=%7B%22uniqueKey%22%3A%22\(studentKey)%22%7D"
+        let url = NSURL(string: urlString)
+        let request = NSMutableURLRequest(URL: url!)
+        request.addValue(parseID, forHTTPHeaderField: parseAppIDField)
+        request.addValue(parseKey, forHTTPHeaderField: parseKeyIDField)
+        let session = NSURLSession.sharedSession()
+        let task = session.dataTaskWithRequest(request) { data, response, error in
+            if error != nil { /* Handle error */
+                return
+            }
+            
+            guard let queryData = try? NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments) as? NSDictionary else {
+                return
+            }
+            
+            guard let queryObjectId = queryData!["results"]![0]["objectId"] as? String else {
+                return
+            }
+            
+            var httpMethod = ""
+            
+            if queryObjectId != "" {
+                httpMethod = "PUSH"
+            } else {
+                httpMethod = "PUT"
+            }
+            
+            print(queryObjectId)
+            completion(httpMethod: httpMethod, objId: queryObjectId)
+        }
+        task.resume()
+    }
+}
+
+
+extension ParseAPI {
+    
+    
     //MARK: ParseJSON data
     
-    private func parseStudentData(){
+    private func parseStudentData(studentData: NSDictionary){
         
-        guard let sortedData = studentData!["results"] as? [[String: AnyObject]] else {
+        studentArray = []
+        
+        guard let sortedData = studentData["results"] as? [[String: AnyObject]] else {
             print("no results")
             return
         }
@@ -97,59 +182,37 @@ class ParseAPI {
             
             self.studentArray.append(studentInformation)
         }
-        
         print(self.studentArray.count)
     }
     
-    func postStudentData(studentInformation: Student, updateOldData: Bool) {
-        var parseURL:String?
-        if updateOldData {
-            parseURL = parseURLString + parseUpdateString
-        } else {
-            parseURL = parseURLString
-        }
-        let url = NSURL(string: parseURL!)
-        let request = NSMutableURLRequest(URL: url!)
-        request.HTTPMethod = "PUT"
-        request.addValue(parseID, forHTTPHeaderField: parseAppIDField)
-        request.addValue(parseKey, forHTTPHeaderField: parseKeyIDField)
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.HTTPBody = "{\"uniqueKey\": \"\(studentInformation.uniqueKey)\", \"firstName\": \"\(studentInformation.firstName)\", \"lastName\": \"\(studentInformation.lastName)\",\"mapString\": \"\(studentInformation.mapString)\", \"mediaURL\": \"\(studentInformation.mediaURL)\",\"latitude\": \(studentInformation.latitude), \"longitude\": \(studentInformation.longitude)}".dataUsingEncoding(NSUTF8StringEncoding)
+    
+    //MARK: Alert View
+    
+    private func showAlert(alertMessage: String, header: String, addButton: UIAlertAction?, addCancelButton: Bool) {
         
-        let task = session.dataTaskWithRequest(request) { data, response, error in
-            if error != nil {
-                //handle error
-                return
-            }
-            print(NSString(data: data!, encoding: NSUTF8StringEncoding))
+        let cancelPress = UIAlertAction(title: "Cancel", style: .Default) { (action) in
+            return
         }
-        task.resume()
+        
+        dispatch_async(dispatch_get_main_queue(), {
+            let theAlert = UIAlertController(title: header, message: alertMessage, preferredStyle: .Alert)
+            if addButton != nil {
+                theAlert.addAction(addButton!)
+            }
+            if addCancelButton {
+                theAlert.addAction(cancelPress)
+            }
+            self.contextController!.presentViewController(theAlert, animated: true, completion: nil)
+        })
     }
     
+    func setContextView(contextViewController: UIViewController) {
+        contextController = contextViewController
+    }
     
     //MARK: Shared Instance
     
     class func sharedInstance() -> ParseAPI {
         return sharedParse
-    }
-}
-
-//MARK: Exceeding Expectations
-
-extension ParseAPI {
-    
-    func queryParse(studentInfo: Student) {
-        let urlString = "https://api.parse.com/1/classes/StudentLocation?where=%7B%22uniqueKey%22%3A%22\(studentInfo.uniqueKey)%22%7D"
-        let url = NSURL(string: urlString)
-        let request = NSMutableURLRequest(URL: url!)
-        request.addValue(parseID, forHTTPHeaderField: parseAppIDField)
-        request.addValue(parseKey, forHTTPHeaderField: parseKeyIDField)
-        let session = NSURLSession.sharedSession()
-        let task = session.dataTaskWithRequest(request) { data, response, error in
-            if error != nil { /* Handle error */
-                return }
-            print(NSString(data: data!, encoding: NSUTF8StringEncoding))
-        }
-        task.resume()
     }
 }

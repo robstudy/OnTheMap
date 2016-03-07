@@ -20,12 +20,17 @@ class PostVC: UIViewController {
     @IBOutlet weak var onTheMapButton: UIButton!
     @IBOutlet weak var submitButton: UIButton!
     @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var activityView: UIActivityIndicatorView!
     
-    var createdStudent:Student?
+    var pushOrPut = ""
+    
+    private var studentInformation:(firstName: String, lastName: String, userKey: String)?
+    private var studentLocationData: (latitude: Double, longitude: Double, mapString: String)?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupFields()
+        print("\(pushOrPut)")
     }
 
     override func didReceiveMemoryWarning() {
@@ -33,16 +38,14 @@ class PostVC: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    
-    
     @IBAction func cancel(sender: UIButton) {
+        print("\(pushOrPut)")
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     
     @IBAction func locateOnTheMap(sender: UIButton) {
         let geo = CLGeocoder()
-        print("clicked")
         if let local = locationInputField.text {
             geo.geocodeAddressString(local, completionHandler: { (placemark, error) in
                 if error != nil {
@@ -53,13 +56,14 @@ class PostVC: UIViewController {
                 if let locationPlaceMark = placemark?[0] {
                     self.mapView.showAnnotations([MKPlacemark(placemark: locationPlaceMark)], animated: true)
                     
-                    print(locationPlaceMark.location)
+                    UdacityAPI.sharedInstance().getUserData()
                     
-                   /* let lat = (locationPlaceMark.location?.coordinate.latitude)!
+                    let lat = (locationPlaceMark.location?.coordinate.latitude)!
                     let long = (locationPlaceMark.location?.coordinate.longitude)!
                     
+                    self.studentLocationData = (lat, long, local)
                     
-                    self.createdStudent = Student(uniqueKey: <#T##String#>, firstName: <#T##String#>, lastName: <#T##String#>, mediaURL: <#T##String#>, latitude: lat, longitude: long, mapString: local)*/
+                    print(self.studentLocationData)
                     
                     self.toggleMapView()
                 }
@@ -68,7 +72,20 @@ class PostVC: UIViewController {
     }
     
     @IBAction func submit(sender: UIButton) {
-        UdacityAPI.sharedInstance().getUserData()
+        activityView.startAnimating()
+        view.bringSubviewToFront(activityView)
+        studentInformation = UdacityAPI.sharedInstance().studentInformation
+        if studentInformation != nil {
+            print("Student Information: \(studentInformation!.firstName) \(studentInformation!.lastName) Key: \(studentInformation!.userKey)")
+        }
+        
+        guard let submitUrl = urlInputField.text else {
+            return
+        }
+        
+        let submitttedStudent = Student(uniqueKey: studentInformation!.userKey, firstName: studentInformation!.firstName, lastName: studentInformation!.lastName, mediaURL: submitUrl, latitude: studentLocationData!.latitude, longitude: studentLocationData!.longitude, mapString: studentLocationData!.mapString)
+        
+        print(submitttedStudent)
     }
     
     private func toggleMapView() {
@@ -80,14 +97,14 @@ class PostVC: UIViewController {
         submitButton.layer.cornerRadius = 7
         submitButton.layer.borderWidth = 3
         submitButton.layer.borderColor = UIColor.blackColor().CGColor
+        submitButton.layer.bounds.size.height = 50
+        submitButton.layer.bounds.size.width = 100
         urlInputField.hidden = false
         locationInputField.hidden = true
     }
-    
     
     private func setupFields() {
         urlInputField.hidden = true
         submitButton.hidden = true
     }
-
 }

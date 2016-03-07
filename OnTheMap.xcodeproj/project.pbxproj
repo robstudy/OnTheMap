@@ -21,6 +21,7 @@
 		DFF9A8661C7627990092D61B /* ParseAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFF9A8651C7627990092D61B /* ParseAPI.swift */; };
 		DFF9A86A1C7B5D560092D61B /* Student.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFF9A8691C7B5D560092D61B /* Student.swift */; };
 		DFF9A86C1C7CB0A10092D61B /* StudentTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFF9A86B1C7CB0A10092D61B /* StudentTableCell.swift */; };
+		DFFF7CC61C8CAD4100284CEC /* TabBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFFF7CC51C8CAD4100284CEC /* TabBarVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +62,7 @@
 		DFF9A8651C7627990092D61B /* ParseAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseAPI.swift; sourceTree = "<group>"; };
 		DFF9A8691C7B5D560092D61B /* Student.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Student.swift; sourceTree = "<group>"; };
 		DFF9A86B1C7CB0A10092D61B /* StudentTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentTableCell.swift; sourceTree = "<group>"; };
+		DFFF7CC51C8CAD4100284CEC /* TabBarVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,15 +113,12 @@
 		DF8626441C1E84C100554696 /* OnTheMap */ = {
 			isa = PBXGroup;
 			children = (
+				DF8626451C1E84C100554696 /* AppDelegate.swift */,
+				DFFF7CC21C8CA7E800284CEC /* ViewConrollers */,
 				DF046FDA1C42FEEE00E0EB92 /* UdacityAPI.swift */,
 				DFF9A8651C7627990092D61B /* ParseAPI.swift */,
 				DFF9A8691C7B5D560092D61B /* Student.swift */,
-				DF8626451C1E84C100554696 /* AppDelegate.swift */,
-				DF8626471C1E84C100554696 /* LoginVC.swift */,
-				DF005F271C31963C009EA528 /* MapVC.swift */,
-				DF6AD1EA1C3A544B00575C83 /* ListVC.swift */,
 				DFF9A86B1C7CB0A10092D61B /* StudentTableCell.swift */,
-				DF007E911C7E0CB700DFFBD0 /* PostVC.swift */,
 				DF8626491C1E84C100554696 /* Main.storyboard */,
 				DF86264C1C1E84C100554696 /* Assets.xcassets */,
 				DF8626511C1E84C100554696 /* Info.plist */,
@@ -144,6 +143,18 @@
 				DF8626671C1E84C100554696 /* Info.plist */,
 			);
 			path = OnTheMapUITests;
+			sourceTree = "<group>";
+		};
+		DFFF7CC21C8CA7E800284CEC /* ViewConrollers */ = {
+			isa = PBXGroup;
+			children = (
+				DF8626471C1E84C100554696 /* LoginVC.swift */,
+				DF005F271C31963C009EA528 /* MapVC.swift */,
+				DF007E911C7E0CB700DFFBD0 /* PostVC.swift */,
+				DF6AD1EA1C3A544B00575C83 /* ListVC.swift */,
+				DFFF7CC51C8CAD4100284CEC /* TabBarVC.swift */,
+			);
+			name = ViewConrollers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -282,6 +293,7 @@
 			files = (
 				DFF9A86C1C7CB0A10092D61B /* StudentTableCell.swift in Sources */,
 				DF6AD1EB1C3A544B00575C83 /* ListVC.swift in Sources */,
+				DFFF7CC61C8CAD4100284CEC /* TabBarVC.swift in Sources */,
 				DF8626481C1E84C100554696 /* LoginVC.swift in Sources */,
 				DF005F281C31963C009EA528 /* MapVC.swift in Sources */,
 				DF8626461C1E84C100554696 /* AppDelegate.swift in Sources */,

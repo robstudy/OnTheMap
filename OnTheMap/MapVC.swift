@@ -13,15 +13,11 @@ class MapVC: UIViewController, MKMapViewDelegate {
     
     @IBOutlet weak var mapView: MKMapView!
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         mapView.delegate = self
-        //annotations for mapview
         addPins()
     }
-    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -59,23 +55,6 @@ class MapVC: UIViewController, MKMapViewDelegate {
                 }
             }
         }
-    }
-    
-    //MARK: Logout
-    
-    @IBAction func logout(sender: UIBarButtonItem) {
-        UdacityAPI.sharedInstance().logOut()
-        
-        self.dismissViewControllerAnimated(true, completion: nil)
-    }
-    
-    @IBAction func postLocation(sender: UIBarButtonItem) {
-        self.performSegueWithIdentifier("PostVC", sender: self)
-    }
-    
-
-    @IBAction func refreshMap(sender: UIBarButtonItem) {
-        
     }
 }
 
@@ -119,8 +98,7 @@ extension MapVC {
             //Place in annotations array
             annotations.append(annotation)
         }
-        
-        //Add annotations to map
+        //Add annotations to maps
         mapView.addAnnotations(annotations)
     }
 }

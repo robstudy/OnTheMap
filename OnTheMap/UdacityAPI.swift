@@ -14,66 +14,59 @@ private let sharedUdacity = UdacityAPI()
 
 class UdacityAPI {
     
+    private var session = NSURLSession.sharedSession()
+    private var viewController: UIViewController?
+    private let udacityURLString = "https://www.udacity.com/api/session"
+    var studentInformation:(firstName: String, lastName: String, userKey: String)?
     var studentKey: String = ""
     
-    private var session = NSURLSession.sharedSession()
-    private var loginController: UIViewController?
-    
-    let udacityURLString = "https://www.udacity.com/api/session"
-    
     //Call Session
-    func startSession(eText emailText: String, pText passwordText: String, loginController: UIViewController) {
+    func startSession(eText emailText: String, pText passwordText: String, completion: (error: String?, completedRequest: Bool?) -> Void) {
         let request = NSMutableURLRequest(URL: NSURL(string: udacityURLString)!)
         request.HTTPMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.HTTPBody = "{\"udacity\": {\"username\": \"\(emailText)\", \"password\": \"\(passwordText)\"}}".dataUsingEncoding(NSUTF8StringEncoding)
         
-        self.loginController = loginController
+        print("\(request)")
         
-        udacityPOSTRequest(request)
-    }
-    
-    //MARK: Post Request
-    
-    private func udacityPOSTRequest(request: NSURLRequest!){
         let task = session.dataTaskWithRequest(request, completionHandler: {
             (data, response, error) in
             
             if error != nil { //Handle Error
-                self.showAlert(self.loginController!, alertMessage: "Unable to connect to the internet!")
+                completion(error: "Unable to connect to the internet", completedRequest: nil)
                 return
             }
-            
             
             guard let newData = data?.subdataWithRange(NSMakeRange(5, (data?.length)! - 5)) else {
                 return
             }/*subset response data!*/
             
             guard let studentInfo = try? NSJSONSerialization.JSONObjectWithData(newData, options: .AllowFragments) as? NSDictionary else {
-                print("no student information")
                 return
             }
             
-            guard let getStudentKey = studentInfo!["account"]!["key"] as? String else {
-                print("No student key")
+            if studentInfo?["error"] != nil {
+                completion(error: "Invalid user credentials", completedRequest: nil)
                 return
             }
             
-            self.studentKey = getStudentKey
+            guard let key = studentInfo?["account"]?["key"] as? String else {
+                return
+            }
             
-            print(self.studentKey)
-            
+            self.studentKey = key
             
             print(NSString(data: newData, encoding: NSUTF8StringEncoding))
             
             if let dataText = String(data: newData, encoding: NSUTF8StringEncoding) {
+                print(dataText)
                 if (dataText.rangeOfString("true") != nil) {
-                    dispatch_async(dispatch_get_main_queue(), {
-                        self.loginController!.performSegueWithIdentifier("showTabC", sender: self)
-                    })
+                    completion(error: nil, completedRequest: true)
+                    return
                 } else {
-                    self.showAlert(self.loginController!, alertMessage: "Invalid user credentials")
+                    completion(error: "Invalid user credentials", completedRequest: nil)
+                    return
                 }
             }
         })
@@ -105,17 +98,17 @@ class UdacityAPI {
     }
     
     //MARK: Get Data
-    func getUserData() {
+    func getUserData(){
         let request = NSMutableURLRequest(URL: NSURL(string: "https://www.udacity.com/api/users/\(studentKey)")!)
         let session = NSURLSession.sharedSession()
+
         let task = session.dataTaskWithRequest(request) { data, response, error in
             if error != nil { // Handle error...
-                print(error)
+                self.showAlert("\(error)")
                 return
             }
             
             guard let newData = data?.subdataWithRange(NSMakeRange(5, data!.length - 5)) else {
-                print("Can't get data")
                 return
             }/* subset response data! */
             
@@ -123,9 +116,19 @@ class UdacityAPI {
                 return
             }
             
-            print(studentArray)
+            guard let key = studentArray!["user"]!["key"] as? String else {
+                return
+            }
             
-            //print(NSString(data: newData, encoding: NSUTF8StringEncoding))
+            guard let firstName = studentArray!["user"]!["first_name"] as? String else {
+                return
+            }
+            
+            guard let lastName = studentArray!["user"]!["last_name"] as? String else {
+                return
+            }
+            
+            self.studentInformation = (firstName, lastName, key)
         }
         task.resume()
     }
@@ -133,19 +136,18 @@ class UdacityAPI {
     
     //MARK: Show Alert
     
-    func showAlert(viewController: UIViewController, alertMessage: String) {
+    private func showAlert(alertMessage: String) {
         
         let okPress = UIAlertAction(title: "OK", style: .Default) {(action) in
-            viewController.dismissViewControllerAnimated(true, completion: nil)
+            return
         }
         
         dispatch_async(dispatch_get_main_queue(), {
             let noConnectionAlert = UIAlertController(title: "Oh No!", message: alertMessage, preferredStyle: .Alert)
             noConnectionAlert.addAction(okPress)
-            viewController.presentViewController(noConnectionAlert, animated: true, completion: nil)
+            self.viewController!.presentViewController(noConnectionAlert, animated: true, completion: nil)
         })
     }
-
     
     //MARK: Shared Instance
     

@@ -18,7 +18,6 @@ struct Student {
     let longitude: Double
     let mapString: String
     
-    
     init(uniqueKey: String) {
         self.uniqueKey = uniqueKey
         firstName = ""

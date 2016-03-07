@@ -14,19 +14,11 @@ class ListVC: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.delegate = self
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-    
-    //MARK: Logout
-    
-    @IBAction func logout(sender: UIBarButtonItem) {
-        UdacityAPI.sharedInstance().logOut()
-        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     //MARK: Alert

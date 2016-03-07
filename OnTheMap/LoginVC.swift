@@ -16,7 +16,7 @@ class LoginVC : UIViewController, UITextFieldDelegate {
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet var LogInUIView: UIView!
     @IBOutlet weak var udacityTextView: UITextView!
-    
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
 
     //MARK: Load
     
@@ -25,9 +25,8 @@ class LoginVC : UIViewController, UITextFieldDelegate {
         configureBackground()
         buttonLayout()
         setTextViews()
-        ParseAPI.sharedInstance().getStudentData()
+        ParseAPI.sharedInstance().getStudentData(self)
     }
-    
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -36,7 +35,9 @@ class LoginVC : UIViewController, UITextFieldDelegate {
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
-
+        
+        emailTextField.text = ""
+        passwordTextField.text = ""
     }
 
     override func didReceiveMemoryWarning() {
@@ -52,8 +53,22 @@ class LoginVC : UIViewController, UITextFieldDelegate {
         guard let passwordText = passwordTextField.text else {
             return
         }
-        
-        UdacityAPI.sharedInstance().startSession(eText: emailText, pText: passwordText, loginController: self)
+        dispatch_async(dispatch_get_main_queue(), {
+            self.view.bringSubviewToFront(self.activityIndicator)
+            self.activityIndicator.startAnimating()
+        })
+    
+        UdacityAPI.sharedInstance().startSession(eText: emailText, pText: passwordText, completion: {
+            (error, completed) in
+            if error != nil {
+                self.showAlert(error!)
+            } else if (completed != nil) {
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.activityIndicator.stopAnimating()
+                    self.performSegueWithIdentifier("showTabVC", sender: self)
+                })
+            }
+        })
     }
     
     @IBAction func faceBookLogin(sender: UIButton) {
@@ -78,6 +93,23 @@ class LoginVC : UIViewController, UITextFieldDelegate {
 }
 
 extension LoginVC {
+    
+    //MARK: -Show Alert
+    
+    private func showAlert(alertMessage: String) {
+        let okPress = UIAlertAction(title: "OK", style: .Default) {(action) in
+            dispatch_async(dispatch_get_main_queue(), {
+                self.activityIndicator.stopAnimating()
+            })
+            return
+        }
+        
+        dispatch_async(dispatch_get_main_queue(), {
+            let noConnectionAlert = UIAlertController(title: "Oh No!", message: alertMessage, preferredStyle: .Alert)
+            noConnectionAlert.addAction(okPress)
+            self.presentViewController(noConnectionAlert, animated: true, completion: nil)
+        })
+    }
 
     //MARK: - Load View
     
