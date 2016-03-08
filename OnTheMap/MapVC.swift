@@ -16,6 +16,9 @@ class MapVC: UIViewController, MKMapViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         mapView.delegate = self
+    }
+    
+    override func viewDidAppear(animated: Bool) {
         addPins()
     }
     
@@ -63,7 +66,6 @@ extension MapVC {
         let okPress = UIAlertAction(title: "OK", style: .Default) {(action) in
             return
         }
-        
         dispatch_async(dispatch_get_main_queue(), {
             let noConnectionAlert = UIAlertController(title: "Oh No!", message: "Invalid URL", preferredStyle: .Alert)
             noConnectionAlert.addAction(okPress)
@@ -76,7 +78,7 @@ extension MapVC {
         //annotations for mapview
         var annotations = [MKPointAnnotation]()
         
-        for locations in ParseAPI.sharedInstance().studentArray {
+        for locations in StudentInformation.studentArray {
             
             //get lon and lat values
             let lat = CLLocationDegrees(locations.latitude)

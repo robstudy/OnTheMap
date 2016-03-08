@@ -10,7 +10,8 @@ import UIKit
 
 class TabBarVC: UITabBarController {
     
-    var httpMethod = ""
+    private var httpMethod = ""
+    private var objectID = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,26 +31,53 @@ class TabBarVC: UITabBarController {
     }
     
     
+    @IBAction func refresh(sender: AnyObject) {
+        StudentInformation.studentArray = []
+        ParseAPI.sharedInstance().getStudentData({(completion) in
+            if completion {
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.refreshViews()
+                })
+            } else {
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.showAlert("Unable to reload data", header: "Error", addButton: nil, addReturnButton: true)
+                })
+            }
+        })
+    }
+    
+    private func refreshViews() {
+        if self.selectedIndex == 0 {
+            let mapVC: MapVC = self.selectedViewController as! MapVC
+            mapVC.mapView.removeAnnotations(mapVC.mapView.annotations)
+            mapVC.viewDidAppear(true)
+        } else if self.selectedIndex == 1 {
+            let listVC = self.selectedViewController as! ListVC
+            listVC.tableView.reloadData()
+        }
+    }
+    
+    
     @IBAction func postLocation(sender: AnyObject) {
         let studentKey = UdacityAPI.sharedInstance().studentKey
         ParseAPI.sharedInstance().queryParse(studentKey, completion: { (httpMethod, objId) in
             self.httpMethod = httpMethod
             if objId != nil {
+                self.objectID = objId!
                 let okButton = UIAlertAction(title: "OK", style: .Default) { (action) in
                     self.performSegueWithIdentifier("postVC", sender: self)
                 }
                 
-                self.showAlert("Would you like to overwrite previous data?", header: "It appears you already have posted information", addButton: okButton, addCancelButton: true)
+                self.showAlert("Would you like to overwrite previous data?", header: "It appears you already have posted information", addButton: okButton, addReturnButton: true)
             } else {
                 self.performSegueWithIdentifier("postVC", sender: self)
             }
         })
-        print(self.httpMethod)
-        
     }
     
     
     @IBAction func refreshData(sender: AnyObject) {
+        
     }
     
 
@@ -61,12 +89,16 @@ class TabBarVC: UITabBarController {
         if (segue.identifier == "postVC") {
             let postViewController:PostVC = segue.destinationViewController as! PostVC
             postViewController.pushOrPut = httpMethod
+            if (httpMethod == "PUT") {
+                postViewController.objectId = self.objectID
+                postViewController.update = true
+            }
         }
     }
     
-    private func showAlert(alertMessage: String, header: String, addButton: UIAlertAction?, addCancelButton: Bool) {
+    private func showAlert(alertMessage: String, header: String, addButton: UIAlertAction?, addReturnButton: Bool) {
         
-        let cancelPress = UIAlertAction(title: "Cancel", style: .Default) { (action) in
+        let cancelPress = UIAlertAction(title: "Return", style: .Default) { (action) in
             return
         }
         
@@ -75,12 +107,10 @@ class TabBarVC: UITabBarController {
             if addButton != nil {
                 theAlert.addAction(addButton!)
             }
-            if addCancelButton {
+            if addReturnButton {
                 theAlert.addAction(cancelPress)
             }
             self.presentViewController(theAlert, animated: true, completion: nil)
         })
     }
-
-
 }

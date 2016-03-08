@@ -17,18 +17,18 @@ class UdacityAPI {
     private var session = NSURLSession.sharedSession()
     private var viewController: UIViewController?
     private let udacityURLString = "https://www.udacity.com/api/session"
+    private let udacityDeleteRequest = "DELETE"
+    private let udacityPostRequest = "POST"
     var studentInformation:(firstName: String, lastName: String, userKey: String)?
     var studentKey: String = ""
     
     //Call Session
     func startSession(eText emailText: String, pText passwordText: String, completion: (error: String?, completedRequest: Bool?) -> Void) {
         let request = NSMutableURLRequest(URL: NSURL(string: udacityURLString)!)
-        request.HTTPMethod = "POST"
+        request.HTTPMethod = udacityPostRequest
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.HTTPBody = "{\"udacity\": {\"username\": \"\(emailText)\", \"password\": \"\(passwordText)\"}}".dataUsingEncoding(NSUTF8StringEncoding)
-        
-        print("\(request)")
         
         let task = session.dataTaskWithRequest(request, completionHandler: {
             (data, response, error) in
@@ -57,10 +57,7 @@ class UdacityAPI {
             
             self.studentKey = key
             
-            print(NSString(data: newData, encoding: NSUTF8StringEncoding))
-            
             if let dataText = String(data: newData, encoding: NSUTF8StringEncoding) {
-                print(dataText)
                 if (dataText.rangeOfString("true") != nil) {
                     completion(error: nil, completedRequest: true)
                     return
@@ -77,7 +74,7 @@ class UdacityAPI {
     
     func logOut() {
         let request = NSMutableURLRequest(URL: NSURL(string: udacityURLString)!)
-        request.HTTPMethod = "DELETE"
+        request.HTTPMethod = udacityDeleteRequest
         var xsrfCookie: NSHTTPCookie? = nil
         let sharedCookieStorage = NSHTTPCookieStorage.sharedHTTPCookieStorage()
         for cookie in sharedCookieStorage.cookies as [NSHTTPCookie]! {

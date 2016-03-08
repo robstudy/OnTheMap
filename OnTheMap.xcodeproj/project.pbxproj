@@ -22,6 +22,7 @@
 		DFF9A86A1C7B5D560092D61B /* Student.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFF9A8691C7B5D560092D61B /* Student.swift */; };
 		DFF9A86C1C7CB0A10092D61B /* StudentTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFF9A86B1C7CB0A10092D61B /* StudentTableCell.swift */; };
 		DFFF7CC61C8CAD4100284CEC /* TabBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFFF7CC51C8CAD4100284CEC /* TabBarVC.swift */; };
+		DFFF7CCC1C8D295700284CEC /* StudentInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFFF7CCB1C8D295700284CEC /* StudentInformation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +64,7 @@
 		DFF9A8691C7B5D560092D61B /* Student.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Student.swift; sourceTree = "<group>"; };
 		DFF9A86B1C7CB0A10092D61B /* StudentTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentTableCell.swift; sourceTree = "<group>"; };
 		DFFF7CC51C8CAD4100284CEC /* TabBarVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarVC.swift; sourceTree = "<group>"; };
+		DFFF7CCB1C8D295700284CEC /* StudentInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentInformation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,10 +117,9 @@
 			children = (
 				DF8626451C1E84C100554696 /* AppDelegate.swift */,
 				DFFF7CC21C8CA7E800284CEC /* ViewConrollers */,
-				DF046FDA1C42FEEE00E0EB92 /* UdacityAPI.swift */,
-				DFF9A8651C7627990092D61B /* ParseAPI.swift */,
-				DFF9A8691C7B5D560092D61B /* Student.swift */,
-				DFF9A86B1C7CB0A10092D61B /* StudentTableCell.swift */,
+				DFFF7CC71C8D27EA00284CEC /* APIs */,
+				DFFF7CC81C8D293000284CEC /* Models */,
+				DFFF7CCD1C8D2CDA00284CEC /* UIComponents */,
 				DF8626491C1E84C100554696 /* Main.storyboard */,
 				DF86264C1C1E84C100554696 /* Assets.xcassets */,
 				DF8626511C1E84C100554696 /* Info.plist */,
@@ -155,6 +156,32 @@
 				DFFF7CC51C8CAD4100284CEC /* TabBarVC.swift */,
 			);
 			name = ViewConrollers;
+			sourceTree = "<group>";
+		};
+		DFFF7CC71C8D27EA00284CEC /* APIs */ = {
+			isa = PBXGroup;
+			children = (
+				DFF9A8651C7627990092D61B /* ParseAPI.swift */,
+				DF046FDA1C42FEEE00E0EB92 /* UdacityAPI.swift */,
+			);
+			name = APIs;
+			sourceTree = "<group>";
+		};
+		DFFF7CC81C8D293000284CEC /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				DFF9A8691C7B5D560092D61B /* Student.swift */,
+				DFFF7CCB1C8D295700284CEC /* StudentInformation.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		DFFF7CCD1C8D2CDA00284CEC /* UIComponents */ = {
+			isa = PBXGroup;
+			children = (
+				DFF9A86B1C7CB0A10092D61B /* StudentTableCell.swift */,
+			);
+			name = UIComponents;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -301,6 +328,7 @@
 				DF007E921C7E0CB700DFFBD0 /* PostVC.swift in Sources */,
 				DFF9A86A1C7B5D560092D61B /* Student.swift in Sources */,
 				DF046FDB1C42FEEE00E0EB92 /* UdacityAPI.swift in Sources */,
+				DFFF7CCC1C8D295700284CEC /* StudentInformation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

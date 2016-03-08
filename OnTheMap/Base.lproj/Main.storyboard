@@ -274,7 +274,7 @@
                         <rightBarButtonItems>
                             <barButtonItem systemItem="refresh" id="Ki4-26-3kT">
                                 <connections>
-                                    <action selector="refreshData:" destination="zxK-CS-6l6" id="pxd-rF-UiB"/>
+                                    <action selector="refresh:" destination="zxK-CS-6l6" id="A6Q-jq-Kn6"/>
                                 </connections>
                             </barButtonItem>
                             <barButtonItem image="Pin" id="8kK-7v-fbU">
@@ -297,7 +297,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Nsq-jG-Jgs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1569" y="410"/>
+            <point key="canvasLocation" x="1577" y="382"/>
         </scene>
         <!--Student List-->
         <scene sceneID="4fN-1a-aRc">
@@ -388,6 +388,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="9QO-NH-8Wg">
+                                <rect key="frame" x="250" y="250" width="100" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="HTc-gB-TTp"/>
+                                    <constraint firstAttribute="width" constant="100" id="szJ-Jv-exO"/>
+                                </constraints>
+                                <color key="color" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            </activityIndicatorView>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="20u-7B-B4v">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                             </mapView>
@@ -406,10 +414,6 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="nM5-jQ-ZQJ">
                                 <rect key="frame" x="20" y="0.0" width="560" height="600"/>
                                 <subviews>
-                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="Qxt-Iu-zuf">
-                                        <rect key="frame" x="0.0" y="0.0" width="560" height="0.0"/>
-                                        <color key="color" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                    </activityIndicatorView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="GZi-H6-JIy">
                                         <rect key="frame" x="0.0" y="0.0" width="560" height="150"/>
                                         <subviews>
@@ -454,7 +458,7 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="XLR-7D-LJl">
                                         <rect key="frame" x="0.0" y="450" width="560" height="150"/>
                                         <subviews>
-                                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nNE-Gk-E1i">
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nNE-Gk-E1i">
                                                 <rect key="frame" x="8" y="60" width="544" height="10"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -514,18 +518,20 @@
                             <constraint firstItem="20u-7B-B4v" firstAttribute="top" secondItem="NET-46-5Ru" secondAttribute="topMargin" id="IGr-rp-pcX"/>
                             <constraint firstItem="3q4-hQ-gnT" firstAttribute="top" secondItem="LFb-Ml-p9X" secondAttribute="bottom" id="JCH-gF-KwS"/>
                             <constraint firstItem="LFb-Ml-p9X" firstAttribute="top" secondItem="NET-46-5Ru" secondAttribute="topMargin" id="L9y-pU-xDK"/>
+                            <constraint firstItem="9QO-NH-8Wg" firstAttribute="centerX" secondItem="3q4-hQ-gnT" secondAttribute="centerX" id="SLt-eI-vFY"/>
                             <constraint firstItem="nM5-jQ-ZQJ" firstAttribute="top" secondItem="NET-46-5Ru" secondAttribute="topMargin" id="Srw-zr-EzY"/>
                             <constraint firstAttribute="trailingMargin" secondItem="pQX-dT-77S" secondAttribute="trailing" constant="-20" id="aDB-8Z-dAd"/>
                             <constraint firstItem="pQX-dT-77S" firstAttribute="leading" secondItem="NET-46-5Ru" secondAttribute="leadingMargin" constant="-20" id="abC-0u-c1D"/>
                             <constraint firstAttribute="trailingMargin" secondItem="3q4-hQ-gnT" secondAttribute="trailing" constant="-20" id="ax1-Pu-yLT"/>
                             <constraint firstItem="3q4-hQ-gnT" firstAttribute="centerY" secondItem="nM5-jQ-ZQJ" secondAttribute="centerY" id="dHh-YQ-BA8"/>
                             <constraint firstItem="LFb-Ml-p9X" firstAttribute="leading" secondItem="NET-46-5Ru" secondAttribute="leadingMargin" constant="-20" id="hfr-yP-kyH"/>
+                            <constraint firstItem="9QO-NH-8Wg" firstAttribute="centerY" secondItem="nM5-jQ-ZQJ" secondAttribute="centerY" id="ipf-x4-sw2"/>
                             <constraint firstItem="20u-7B-B4v" firstAttribute="leading" secondItem="NET-46-5Ru" secondAttribute="leadingMargin" constant="-20" id="qqf-3c-pcY"/>
                             <constraint firstItem="XGv-LD-xNt" firstAttribute="top" secondItem="pQX-dT-77S" secondAttribute="bottom" id="rAL-dK-ahF"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="activityView" destination="Qxt-Iu-zuf" id="GgE-lr-xuN"/>
+                        <outlet property="activityView" destination="9QO-NH-8Wg" id="YWK-bH-w6e"/>
                         <outlet property="bottomView" destination="pQX-dT-77S" id="KlC-1f-WLd"/>
                         <outlet property="locationInputField" destination="Bvl-b4-eJd" id="djV-sj-YRK"/>
                         <outlet property="mapView" destination="20u-7B-B4v" id="bGC-uH-mdE"/>

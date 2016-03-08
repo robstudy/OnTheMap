@@ -10,7 +10,7 @@ import UIKit
 
 class ListVC: UITableViewController {
     
-    private let students = ParseAPI.sharedInstance().studentArray
+    private let students = StudentInformation.studentArray
     
     override func viewDidLoad() {
         super.viewDidLoad()

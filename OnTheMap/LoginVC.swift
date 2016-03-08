@@ -25,7 +25,6 @@ class LoginVC : UIViewController, UITextFieldDelegate {
         configureBackground()
         buttonLayout()
         setTextViews()
-        ParseAPI.sharedInstance().getStudentData(self)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -63,9 +62,15 @@ class LoginVC : UIViewController, UITextFieldDelegate {
             if error != nil {
                 self.showAlert(error!)
             } else if (completed != nil) {
-                dispatch_async(dispatch_get_main_queue(), {
-                    self.activityIndicator.stopAnimating()
-                    self.performSegueWithIdentifier("showTabVC", sender: self)
+                ParseAPI.sharedInstance().getStudentData({(success) in
+                    if success == true {
+                        dispatch_async(dispatch_get_main_queue(), {
+                            self.activityIndicator.stopAnimating()
+                            self.performSegueWithIdentifier("showTabVC", sender: self)
+                        })
+                    } else {
+                        self.showAlert("Call to Parse API was unsuccessful")
+                    }
                 })
             }
         })
@@ -94,7 +99,7 @@ class LoginVC : UIViewController, UITextFieldDelegate {
 
 extension LoginVC {
     
-    //MARK: -Show Alert
+    //MARK: - Show Alert
     
     private func showAlert(alertMessage: String) {
         let okPress = UIAlertAction(title: "OK", style: .Default) {(action) in

@@ -23,6 +23,8 @@ class PostVC: UIViewController {
     @IBOutlet weak var activityView: UIActivityIndicatorView!
     
     var pushOrPut = ""
+    var update = false
+    var objectId = ""
     
     private var studentInformation:(firstName: String, lastName: String, userKey: String)?
     private var studentLocationData: (latitude: Double, longitude: Double, mapString: String)?
@@ -30,7 +32,6 @@ class PostVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupFields()
-        print("\(pushOrPut)")
     }
 
     override func didReceiveMemoryWarning() {
@@ -39,7 +40,6 @@ class PostVC: UIViewController {
     }
     
     @IBAction func cancel(sender: UIButton) {
-        print("\(pushOrPut)")
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -49,7 +49,7 @@ class PostVC: UIViewController {
         if let local = locationInputField.text {
             geo.geocodeAddressString(local, completionHandler: { (placemark, error) in
                 if error != nil {
-                    print("error")
+                    self.showAlert("Invalid location input", header: "An error occured!", addButton: nil, addReturnButton: true)
                     return
                 }
                 
@@ -63,8 +63,6 @@ class PostVC: UIViewController {
                     
                     self.studentLocationData = (lat, long, local)
                     
-                    print(self.studentLocationData)
-                    
                     self.toggleMapView()
                 }
             })
@@ -72,21 +70,50 @@ class PostVC: UIViewController {
     }
     
     @IBAction func submit(sender: UIButton) {
-        activityView.startAnimating()
-        view.bringSubviewToFront(activityView)
+        toggleActivityView(true)
         studentInformation = UdacityAPI.sharedInstance().studentInformation
-        if studentInformation != nil {
-            print("Student Information: \(studentInformation!.firstName) \(studentInformation!.lastName) Key: \(studentInformation!.userKey)")
-        }
-        
+
         guard let submitUrl = urlInputField.text else {
             return
         }
         
         let submitttedStudent = Student(uniqueKey: studentInformation!.userKey, firstName: studentInformation!.firstName, lastName: studentInformation!.lastName, mediaURL: submitUrl, latitude: studentLocationData!.latitude, longitude: studentLocationData!.longitude, mapString: studentLocationData!.mapString)
         
-        print(submitttedStudent)
+        ParseAPI.sharedInstance().postStudentData(submitttedStudent, requestType: "PUT", updateOldData: update, objectId: objectId, completion:{
+            (error, success) in
+            if error != nil {
+                self.showAlert(error!, header: "Uhoh!", addButton: nil, addReturnButton: true)
+                return
+            }
+            
+            if success {
+                let dismissSelf = UIAlertAction(title: "Return", style: .Default, handler: {(action) in
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                })
+                self.showAlert("Information has been updated.", header: "Success!", addButton: dismissSelf, addReturnButton: false)
+            }
+        })
     }
+    
+    private func showAlert(alertMessage: String, header: String, addButton: UIAlertAction?, addReturnButton: Bool) {
+        
+        let returnPress = UIAlertAction(title: "Return", style: .Default) { (action) in
+            self.toggleActivityView(false)
+            return
+        }
+        
+        dispatch_async(dispatch_get_main_queue(), {
+            let theAlert = UIAlertController(title: header, message: alertMessage, preferredStyle: .Alert)
+            if addButton != nil {
+                theAlert.addAction(addButton!)
+            }
+            if addReturnButton {
+                theAlert.addAction(returnPress)
+            }
+            self.presentViewController(theAlert, animated: true, completion: nil)
+        })
+    }
+
     
     private func toggleMapView() {
         middleView.hidden = true
@@ -101,6 +128,17 @@ class PostVC: UIViewController {
         submitButton.layer.bounds.size.width = 100
         urlInputField.hidden = false
         locationInputField.hidden = true
+    }
+    
+    private func toggleActivityView(on: Bool) {
+        dispatch_async(dispatch_get_main_queue(), {
+            if on {
+                self.activityView.startAnimating()
+                self.view.bringSubviewToFront(self.activityView)
+            } else {
+                self.activityView.stopAnimating()
+            }
+        })
     }
     
     private func setupFields() {
