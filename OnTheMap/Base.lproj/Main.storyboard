@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
     </dependencies>
@@ -150,28 +151,25 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Vx-cc-r1N">
-                                        <rect key="frame" x="0.0" y="430" width="560" height="50"/>
+                                        <rect key="frame" x="0.0" y="430" width="560" height="29"/>
                                         <subviews>
-                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" editable="NO" usesAttributedText="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qGw-m1-aOj">
-                                                <rect key="frame" x="0.0" y="0.0" width="560" height="50"/>
-                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="50" id="iZ5-4U-68J"/>
-                                                </constraints>
-                                                <attributedString key="attributedText">
-                                                    <fragment content="Not A Udacity Member? Click Here.">
-                                                        <attributes>
-                                                            <font key="NSFont" size="14" name="Superclarendon-Regular"/>
-                                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                                        </attributes>
-                                                    </fragment>
-                                                </attributedString>
-                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                            </textView>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QVZ-Aw-5uQ">
+                                                <rect key="frame" x="0.0" y="0.0" width="560" height="29"/>
+                                                <fontDescription key="fontDescription" name="Superclarendon-Regular" family="Superclarendon" pointSize="14"/>
+                                                <state key="normal" title="Not A Udacity Member? Click Here.">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="becomeAMember:" destination="BYZ-38-t0r" eventType="touchUpInside" id="WWM-Nd-AvG"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="3Vx-cc-r1N" secondAttribute="height" multiplier="560:29" id="n9X-fN-dfn"/>
+                                        </constraints>
                                     </stackView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4p8-v2-5HX">
-                                        <rect key="frame" x="0.0" y="505" width="560" height="95"/>
+                                        <rect key="frame" x="0.0" y="484" width="560" height="116"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </view>
                                 </subviews>
@@ -202,6 +200,7 @@
                         <outlet property="emailTextField" destination="o25-pV-qxl" id="ySc-tj-YPl"/>
                         <outlet property="facebookLogInButton" destination="0qT-W8-Io1" id="Umj-f0-XQQ"/>
                         <outlet property="loginButton" destination="pgU-PI-I2i" id="FYk-f7-qfX"/>
+                        <outlet property="notAMemberButton" destination="QVZ-Aw-5uQ" id="9jn-bt-xeD"/>
                         <outlet property="passwordTextField" destination="KJt-Ly-LWp" id="xjT-zY-U0H"/>
                         <outlet property="udacityTextView" destination="zH5-HG-sBf" id="yXI-nP-Rbu"/>
                         <segue destination="v7f-0E-TzQ" kind="presentation" identifier="showTabVC" id="utV-cu-AS1"/>
@@ -388,7 +387,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="9QO-NH-8Wg">
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="9QO-NH-8Wg">
                                 <rect key="frame" x="250" y="250" width="100" height="100"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="100" id="HTc-gB-TTp"/>

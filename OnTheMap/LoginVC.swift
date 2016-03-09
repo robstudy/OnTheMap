@@ -14,10 +14,12 @@ class LoginVC : UIViewController, UITextFieldDelegate {
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var facebookLogInButton: UIButton!
     @IBOutlet weak var loginButton: UIButton!
+    @IBOutlet weak var notAMemberButton: UIButton!
     @IBOutlet var LogInUIView: UIView!
     @IBOutlet weak var udacityTextView: UITextView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
 
+    private var udacitySignUp = "https://www.udacity.com/account/auth#!/signup"
     //MARK: Load
     
     override func viewDidLoad() {
@@ -52,32 +54,40 @@ class LoginVC : UIViewController, UITextFieldDelegate {
         guard let passwordText = passwordTextField.text else {
             return
         }
-        dispatch_async(dispatch_get_main_queue(), {
-            self.view.bringSubviewToFront(self.activityIndicator)
-            self.activityIndicator.startAnimating()
-        })
+        toggleLoading(true)
     
         UdacityAPI.sharedInstance().startSession(eText: emailText, pText: passwordText, completion: {
             (error, completed) in
             if error != nil {
                 self.showAlert(error!)
-            } else if (completed != nil) {
+            }
+            else if (completed != nil) {
                 ParseAPI.sharedInstance().getStudentData({(success) in
-                    if success == true {
-                        dispatch_async(dispatch_get_main_queue(), {
-                            self.activityIndicator.stopAnimating()
+                    dispatch_async(dispatch_get_main_queue(), {
+                        if success == true {
+                            self.toggleLoading(false)
                             self.performSegueWithIdentifier("showTabVC", sender: self)
-                        })
-                    } else {
-                        self.showAlert("Call to Parse API was unsuccessful")
-                    }
+                        } else {
+                            self.showAlert("Call to Parse API was unsuccessful")
+                        }
+                     })
                 })
             }
         })
     }
     
-    @IBAction func faceBookLogin(sender: UIButton) {
+    @IBAction func faceBookLogin(sender: AnyObject) {
         
+    }
+    
+    @IBAction func becomeAMember(sender: AnyObject) {
+        if let url = NSURL(string: udacitySignUp) {
+            if UIApplication.sharedApplication().canOpenURL(url) {
+                UIApplication.sharedApplication().openURL(url)
+            } else {
+                showAlert("Unable to Connect to Sign Up page")
+            }
+        }
     }
     
     //MARK: - TextField Delegate Methods
@@ -103,9 +113,7 @@ extension LoginVC {
     
     private func showAlert(alertMessage: String) {
         let okPress = UIAlertAction(title: "OK", style: .Default) {(action) in
-            dispatch_async(dispatch_get_main_queue(), {
-                self.activityIndicator.stopAnimating()
-            })
+            self.toggleLoading(false)
             return
         }
         
@@ -116,7 +124,7 @@ extension LoginVC {
         })
     }
 
-    //MARK: - Load View
+    //MARK: - UI Functions
     
     private func configureBackground() {
         /**
@@ -152,9 +160,46 @@ extension LoginVC {
         udacityTextView.selectable = false
         udacityTextView.textColor = UIColor.whiteColor()
         
+        
         //Set button delegates
         emailTextField.delegate = self
         passwordTextField.delegate = self
+    }
+    
+    private func toggleLoading(loading: Bool) {
+        dispatch_async(dispatch_get_main_queue(), {
+            if loading {
+                self.emailTextField.alpha = 0.5
+                self.passwordTextField.alpha = 0.5
+                self.loginButton.alpha = 0.5
+                self.facebookLogInButton.alpha = 0.5
+                self.notAMemberButton.alpha = 0.5
+                
+                self.emailTextField.enabled = false
+                self.passwordTextField.enabled = false
+                self.loginButton.enabled = false
+                self.facebookLogInButton.enabled = false
+                self.notAMemberButton.enabled = false
+                self.view.bringSubviewToFront(self.activityIndicator)
+                self.activityIndicator.startAnimating()
+            } else if !loading {
+                self.emailTextField.alpha = 1
+                self.passwordTextField.alpha = 1
+                self.loginButton.alpha = 1
+                self.facebookLogInButton.alpha = 1
+                self.notAMemberButton.alpha = 1
+                
+                self.emailTextField.enabled = true
+                self.passwordTextField.enabled = true
+                self.loginButton.enabled = true
+                self.facebookLogInButton.enabled = true
+                self.notAMemberButton.enabled = true
+                self.activityIndicator.stopAnimating()
+            }
+            
+        })
+        
+        
     }
 }
 
