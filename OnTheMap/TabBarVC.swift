@@ -34,15 +34,13 @@ class TabBarVC: UITabBarController {
     @IBAction func refresh(sender: AnyObject) {
         StudentInformation.studentArray = []
         ParseAPI.sharedInstance().getStudentData({(completion) in
-            if completion {
-                dispatch_async(dispatch_get_main_queue(), {
+            dispatch_async(dispatch_get_main_queue(), {
+                if completion {
                     self.refreshViews()
-                })
-            } else {
-                dispatch_async(dispatch_get_main_queue(), {
+                } else {
                     self.showAlert("Unable to reload data", header: "Error", addButton: nil, addReturnButton: true)
-                })
-            }
+                }
+            })
         })
     }
     
@@ -60,8 +58,16 @@ class TabBarVC: UITabBarController {
     
     @IBAction func postLocation(sender: AnyObject) {
         let studentKey = UdacityAPI.sharedInstance().studentKey
-        ParseAPI.sharedInstance().queryParse(studentKey, completion: { (httpMethod, objId) in
-            self.httpMethod = httpMethod
+        ParseAPI.sharedInstance().queryParse(studentKey, completion: { (httpMethod, objId, error) in
+            
+            if error != nil {
+                self.showAlert("", header: error!, addButton: nil, addReturnButton: true)
+            }
+            
+            if httpMethod != nil {
+                self.httpMethod = httpMethod!
+            }
+            
             if objId != nil {
                 self.objectID = objId!
                 let okButton = UIAlertAction(title: "OK", style: .Default) { (action) in
@@ -98,7 +104,7 @@ class TabBarVC: UITabBarController {
     
     private func showAlert(alertMessage: String, header: String, addButton: UIAlertAction?, addReturnButton: Bool) {
         
-        let cancelPress = UIAlertAction(title: "Return", style: .Default) { (action) in
+        let returnPress = UIAlertAction(title: "Return", style: .Default) { (action) in
             return
         }
         
@@ -108,7 +114,7 @@ class TabBarVC: UITabBarController {
                 theAlert.addAction(addButton!)
             }
             if addReturnButton {
-                theAlert.addAction(cancelPress)
+                theAlert.addAction(returnPress)
             }
             self.presentViewController(theAlert, animated: true, completion: nil)
         })

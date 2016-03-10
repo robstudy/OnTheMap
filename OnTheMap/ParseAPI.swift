@@ -13,20 +13,17 @@ private let sharedParse = ParseAPI()
 class ParseAPI {
     
     private var session = NSURLSession.sharedSession()
-    private let parseID = "QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr"
-    private let parseKey = "QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY"
-    private let parseURLString = "https://api.parse.com/1/classes/StudentLocation"
-    private let parseAppIDField = "X-Parse-Application-Id"
-    private let parseKeyIDField = "X-Parse-REST-API-Key"
-    private let parseUpdateString = "/8ZExGR5uX8"
+    
+    //MARK: GET
     
     func getStudentData(completion: (success:Bool)->Void) {
-        let request = NSMutableURLRequest(URL: NSURL(string: parseURLString)!)
-        request.addValue(parseID, forHTTPHeaderField: parseAppIDField)
-        request.addValue(parseKey, forHTTPHeaderField: parseKeyIDField)
+        let request = NSMutableURLRequest(URL: NSURL(string: ParseStrings.url)!)
+        request.addValue(ParseStrings.id, forHTTPHeaderField: ParseStrings.appID)
+        request.addValue(ParseStrings.key, forHTTPHeaderField: ParseStrings.keyID)
         
         let task = session.dataTaskWithRequest(request) { data, response, error in
             if error != nil {
+                completion(success: false)
                 return
             }
             
@@ -48,24 +45,26 @@ class ParseAPI {
     }
     
     //MARK: POST/PUT
+    
     func postStudentData(studentInformation: Student, requestType: String, updateOldData: Bool, objectId: String?, completion: (error: String?, success: Bool)->Void) {
         var parseURL:String = ""
         if updateOldData {
-            parseURL = parseURLString + "/" + objectId!
+            parseURL = ParseStrings.url + "/" + objectId!
         } else {
-            parseURL = parseURLString
+            parseURL = ParseStrings.url
         }
         let url = NSURL(string: parseURL)
         let request = NSMutableURLRequest(URL: url!)
         request.HTTPMethod = requestType
-        request.addValue(parseID, forHTTPHeaderField: parseAppIDField)
-        request.addValue(parseKey, forHTTPHeaderField: parseKeyIDField)
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue(ParseStrings.id, forHTTPHeaderField: ParseStrings.appID)
+        request.addValue(ParseStrings.key, forHTTPHeaderField: ParseStrings.keyID)
+        request.addValue(ParseStrings.valueJson, forHTTPHeaderField: ParseStrings.content)
+        
         request.HTTPBody = "{\"uniqueKey\": \"\(studentInformation.uniqueKey)\", \"firstName\": \"\(studentInformation.firstName)\", \"lastName\": \"\(studentInformation.lastName)\",\"mapString\": \"\(studentInformation.mapString)\", \"mediaURL\": \"\(studentInformation.mediaURL)\",\"latitude\": \(studentInformation.latitude), \"longitude\": \(studentInformation.longitude)}".dataUsingEncoding(NSUTF8StringEncoding)
         
         let task = session.dataTaskWithRequest(request) { data, response, error in
             if error != nil {
-                //handle error
+                completion(error: "Could not complete request", success: false)
                 return
             }
             
@@ -83,15 +82,18 @@ class ParseAPI {
         task.resume()
     }
     
-    func queryParse(studentKey: String, completion: (httpMethod: String, objId: String?) ->Void) {
-        let urlString = "https://api.parse.com/1/classes/StudentLocation?where=%7B%22uniqueKey%22%3A%22\(studentKey)%22%7D"
+    //MARK: Query
+    
+    func queryParse(studentKey: String, completion: (httpMethod: String?, objId: String?, error: String?) ->Void) {
+        let urlString = ParseStrings.url + "?where=%7B%22uniqueKey%22%3A%22\(studentKey)%22%7D"
         let url = NSURL(string: urlString)
         let request = NSMutableURLRequest(URL: url!)
-        request.addValue(parseID, forHTTPHeaderField: parseAppIDField)
-        request.addValue(parseKey, forHTTPHeaderField: parseKeyIDField)
+        request.addValue(ParseStrings.id, forHTTPHeaderField: ParseStrings.appID)
+        request.addValue(ParseStrings.key, forHTTPHeaderField: ParseStrings.keyID)
         let session = NSURLSession.sharedSession()
         let task = session.dataTaskWithRequest(request) { data, response, error in
             if error != nil { /* Handle error */
+                completion(httpMethod: nil, objId: nil, error: "Could not complete query")
                 return
             }
             
@@ -99,19 +101,19 @@ class ParseAPI {
                 return
             }
             
-            guard let queryObjectId = queryData!["results"]![0]["objectId"] as? String else {
+            guard let queryObjectId = queryData?["results"]?[0]["objectId"] as? String else {
                 return
             }
             
             var httpMethod = ""
             
             if queryObjectId != "" {
-                httpMethod = "PUT"
+                httpMethod = ParseStrings.httpPut
             } else {
-                httpMethod = "PUSH"
+                httpMethod = ParseStrings.httpPush
             }
 
-            completion(httpMethod: httpMethod, objId: queryObjectId)
+            completion(httpMethod: httpMethod, objId: queryObjectId, error: nil)
         }
         task.resume()
     }
@@ -126,6 +128,7 @@ extension ParseAPI {
     private func parseStudentData(studentData: NSDictionary, comletion:(success:Bool)->Void){
         
         guard let sortedData = studentData["results"] as? [[String: AnyObject]] else {
+            comletion(success: false)
             return
         }
         
@@ -166,7 +169,7 @@ extension ParseAPI {
         comletion(success: true)
     }
 
-    //MARK: Shared Instance
+    //MARK: Singleton
     
     class func sharedInstance() -> ParseAPI {
         return sharedParse

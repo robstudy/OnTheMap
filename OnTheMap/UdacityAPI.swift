@@ -15,26 +15,22 @@ private let sharedUdacity = UdacityAPI()
 class UdacityAPI {
     
     private var session = NSURLSession.sharedSession()
-    private var viewController: UIViewController?
-    private let udacityURLString = "https://www.udacity.com/api/session"
-    private let udacityDeleteRequest = "DELETE"
-    private let udacityPostRequest = "POST"
     var studentInformation:(firstName: String, lastName: String, userKey: String)?
     var studentKey: String = ""
     
     //Call Session
     func startSession(eText emailText: String, pText passwordText: String, completion: (error: String?, completedRequest: Bool?) -> Void) {
-        let request = NSMutableURLRequest(URL: NSURL(string: udacityURLString)!)
-        request.HTTPMethod = udacityPostRequest
-        request.addValue("application/json", forHTTPHeaderField: "Accept")
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        let request = NSMutableURLRequest(URL: NSURL(string: UdacityStrings.url)!)
+        request.HTTPMethod = UdacityStrings.httpPost
+        request.addValue(UdacityStrings.valueJson, forHTTPHeaderField: UdacityStrings.accept)
+        request.addValue(UdacityStrings.valueJson, forHTTPHeaderField: UdacityStrings.content)
         request.HTTPBody = "{\"udacity\": {\"username\": \"\(emailText)\", \"password\": \"\(passwordText)\"}}".dataUsingEncoding(NSUTF8StringEncoding)
         
         let task = session.dataTaskWithRequest(request, completionHandler: {
             (data, response, error) in
             
             if error != nil { //Handle Error
-                completion(error: "Unable to connect to the internet", completedRequest: nil)
+                completion(error: Errors.connection, completedRequest: nil)
                 return
             }
             
@@ -47,7 +43,7 @@ class UdacityAPI {
             }
             
             if studentInfo?["error"] != nil {
-                completion(error: "Invalid user credentials", completedRequest: nil)
+                completion(error: Errors.invalidCreditials, completedRequest: nil)
                 return
             }
             
@@ -62,7 +58,7 @@ class UdacityAPI {
                     completion(error: nil, completedRequest: true)
                     return
                 } else {
-                    completion(error: "Invalid user credentials", completedRequest: nil)
+                    completion(error: Errors.invalidCreditials, completedRequest: nil)
                     return
                 }
             }
@@ -73,15 +69,15 @@ class UdacityAPI {
     //MARK: Logout
     
     func logOut() {
-        let request = NSMutableURLRequest(URL: NSURL(string: udacityURLString)!)
-        request.HTTPMethod = udacityDeleteRequest
+        let request = NSMutableURLRequest(URL: NSURL(string: UdacityStrings.url)!)
+        request.HTTPMethod = UdacityStrings.httpDelete
         var xsrfCookie: NSHTTPCookie? = nil
         let sharedCookieStorage = NSHTTPCookieStorage.sharedHTTPCookieStorage()
         for cookie in sharedCookieStorage.cookies as [NSHTTPCookie]! {
-            if cookie.name == "XSRF-TOKEN" { xsrfCookie = cookie }
+            if cookie.name == UdacityStrings.cookieName { xsrfCookie = cookie }
         }
         if let xsrfCookie = xsrfCookie {
-            request.setValue(xsrfCookie.value, forHTTPHeaderField: "X-XSRF-TOKEN")
+            request.setValue(xsrfCookie.value, forHTTPHeaderField: UdacityStrings.cookieHeader)
         }
         let session = NSURLSession.sharedSession()
         let task = session.dataTaskWithRequest(request) { data, response, error in
@@ -96,12 +92,11 @@ class UdacityAPI {
     
     //MARK: Get Data
     func getUserData(){
-        let request = NSMutableURLRequest(URL: NSURL(string: "https://www.udacity.com/api/users/\(studentKey)")!)
+        let request = NSMutableURLRequest(URL: NSURL(string: UdacityStrings.queryUrl + studentKey)!)
         let session = NSURLSession.sharedSession()
 
         let task = session.dataTaskWithRequest(request) { data, response, error in
             if error != nil { // Handle error...
-                self.showAlert("\(error)")
                 return
             }
             
@@ -131,20 +126,6 @@ class UdacityAPI {
     }
     
     
-    //MARK: Show Alert
-    
-    private func showAlert(alertMessage: String) {
-        
-        let okPress = UIAlertAction(title: "OK", style: .Default) {(action) in
-            return
-        }
-        
-        dispatch_async(dispatch_get_main_queue(), {
-            let noConnectionAlert = UIAlertController(title: "Oh No!", message: alertMessage, preferredStyle: .Alert)
-            noConnectionAlert.addAction(okPress)
-            self.viewController!.presentViewController(noConnectionAlert, animated: true, completion: nil)
-        })
-    }
     
     //MARK: Shared Instance
     
