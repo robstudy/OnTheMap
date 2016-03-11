@@ -80,12 +80,6 @@ class TabBarVC: UITabBarController {
             }
         })
     }
-    
-    
-    @IBAction func refreshData(sender: AnyObject) {
-        
-    }
-    
 
 
     // MARK: - Navigation

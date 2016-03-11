@@ -90,7 +90,6 @@ class ParseAPI {
         let request = NSMutableURLRequest(URL: url!)
         request.addValue(ParseStrings.id, forHTTPHeaderField: ParseStrings.appID)
         request.addValue(ParseStrings.key, forHTTPHeaderField: ParseStrings.keyID)
-        let session = NSURLSession.sharedSession()
         let task = session.dataTaskWithRequest(request) { data, response, error in
             if error != nil { /* Handle error */
                 completion(httpMethod: nil, objId: nil, error: "Could not complete query")
@@ -101,6 +100,8 @@ class ParseAPI {
                 return
             }
             
+            //Known Eror, results that return no data cause NSRangeException
+            
             guard let queryObjectId = queryData?["results"]?[0]["objectId"] as? String else {
                 return
             }
@@ -110,7 +111,7 @@ class ParseAPI {
             if queryObjectId != "" {
                 httpMethod = ParseStrings.httpPut
             } else {
-                httpMethod = ParseStrings.httpPush
+                httpMethod = ParseStrings.httpPost
             }
 
             completion(httpMethod: httpMethod, objId: queryObjectId, error: nil)

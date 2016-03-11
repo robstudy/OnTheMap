@@ -79,7 +79,7 @@ class PostVC: UIViewController {
         
         let submitttedStudent = Student(uniqueKey: studentInformation!.userKey, firstName: studentInformation!.firstName, lastName: studentInformation!.lastName, mediaURL: submitUrl, latitude: studentLocationData!.latitude, longitude: studentLocationData!.longitude, mapString: studentLocationData!.mapString)
         
-        ParseAPI.sharedInstance().postStudentData(submitttedStudent, requestType: "PUT", updateOldData: update, objectId: objectId, completion:{
+        ParseAPI.sharedInstance().postStudentData(submitttedStudent, requestType: pushOrPut, updateOldData: update, objectId: objectId, completion:{
             (error, success) in
             if error != nil {
                 self.showAlert(error!, header: "Uhoh!", addButton: nil, addReturnButton: true)
@@ -114,22 +114,6 @@ class PostVC: UIViewController {
         })
     }
 
-    
-    private func toggleMapView() {
-        middleView.hidden = true
-        bottomView.hidden = true
-        onTheMapButton.hidden = true
-        onTheMapButton.enabled = false
-        submitButton.hidden = false
-        submitButton.layer.cornerRadius = 7
-        submitButton.layer.borderWidth = 3
-        submitButton.layer.borderColor = UIColor.blackColor().CGColor
-        submitButton.layer.bounds.size.height = 50
-        submitButton.layer.bounds.size.width = 100
-        urlInputField.hidden = false
-        locationInputField.hidden = true
-    }
-    
     private func toggleActivityView(on: Bool) {
         dispatch_async(dispatch_get_main_queue(), {
             if on {
@@ -141,8 +125,19 @@ class PostVC: UIViewController {
         })
     }
     
+    private func toggleMapView() {
+        middleView.hidden = true
+        bottomView.hidden = true
+        onTheMapButton.hidden = true
+        submitButton.hidden = false
+        submitButton.layer.cornerRadius = 7
+        urlInputField.hidden = false
+        locationInputField.hidden = true
+    }
+    
     private func setupFields() {
         urlInputField.hidden = true
         submitButton.hidden = true
+        onTheMapButton.layer.cornerRadius = 7
     }
 }

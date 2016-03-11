@@ -19,7 +19,7 @@ extension ParseAPI {
         static let valueJson = "application/json"
         static let content = "Content-Type"
         static let httpPut = "PUT"
-        static let httpPush = "PUSH"
+        static let httpPost = "POST"
     }
 }
 
