@@ -2,8 +2,6 @@
 //  TabBarVC.swift
 //  OnTheMap
 //
-//  Created by Robert Garza on 3/6/16.
-//  Copyright © 2016 Robert Garza. All rights reserved.
 //
 
 import UIKit
@@ -68,15 +66,18 @@ class TabBarVC: UITabBarController {
                 self.httpMethod = httpMethod!
             }
             
-            if objId != nil {
+            if objId != "" {
                 self.objectID = objId!
                 let okButton = UIAlertAction(title: "OK", style: .Default) { (action) in
-                    self.performSegueWithIdentifier("postVC", sender: self)
+                dispatch_async(dispatch_get_main_queue(), {
+                        self.performSegueWithIdentifier("postVC", sender: self)
+                    })
                 }
-                
                 self.showAlert("Would you like to overwrite previous data?", header: "It appears you already have posted information", addButton: okButton, addReturnButton: true)
             } else {
-                self.performSegueWithIdentifier("postVC", sender: self)
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.performSegueWithIdentifier("postVC", sender: self)
+                })
             }
         })
     }

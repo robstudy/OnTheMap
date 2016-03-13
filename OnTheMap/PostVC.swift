@@ -2,14 +2,11 @@
 //  PostVC.swift
 //  OnTheMap
 //
-//  Created by Robert Garza on 2/24/16.
-//  Copyright © 2016 Robert Garza. All rights reserved.
-//
 
 import UIKit
 import MapKit
 
-class PostVC: UIViewController {
+class PostVC: UIViewController, UITextFieldDelegate {
     
     
     @IBOutlet weak var topView: UIView!
@@ -38,6 +35,8 @@ class PostVC: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    //MARK: - IBActions
     
     @IBAction func cancel(sender: UIButton) {
         self.dismissViewControllerAnimated(true, completion: nil)
@@ -95,6 +94,8 @@ class PostVC: UIViewController {
         })
     }
     
+    //MARK: - Alert
+    
     private func showAlert(alertMessage: String, header: String, addButton: UIAlertAction?, addReturnButton: Bool) {
         
         let returnPress = UIAlertAction(title: "Return", style: .Default) { (action) in
@@ -113,14 +114,18 @@ class PostVC: UIViewController {
             self.presentViewController(theAlert, animated: true, completion: nil)
         })
     }
+    
+    //MARK - Toggle Views
 
     private func toggleActivityView(on: Bool) {
         dispatch_async(dispatch_get_main_queue(), {
             if on {
                 self.activityView.startAnimating()
                 self.view.bringSubviewToFront(self.activityView)
+                self.submitButton.enabled = false
             } else {
                 self.activityView.stopAnimating()
+                self.submitButton.enabled = true
             }
         })
     }
@@ -135,7 +140,23 @@ class PostVC: UIViewController {
         locationInputField.hidden = true
     }
     
+    //MARK: - TextField Methods
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
+    
+    //MARK: - Set up Fields
+    
     private func setupFields() {
+        locationInputField.delegate = self
+        urlInputField.delegate = self
         urlInputField.hidden = true
         submitButton.hidden = true
         onTheMapButton.layer.cornerRadius = 7

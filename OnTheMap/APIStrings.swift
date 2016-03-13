@@ -2,9 +2,6 @@
 //  APIStrings.swift
 //  OnTheMap
 //
-//  Created by Robert Garza on 3/9/16.
-//  Copyright © 2016 Robert Garza. All rights reserved.
-//
 
 import Foundation
 

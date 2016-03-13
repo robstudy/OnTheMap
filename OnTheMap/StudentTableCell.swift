@@ -2,9 +2,6 @@
 //  StudentTableCell.swift
 //  OnTheMap
 //
-//  Created by Robert Garza on 2/23/16.
-//  Copyright © 2016 Robert Garza. All rights reserved.
-//
 
 import UIKit
 

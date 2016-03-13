@@ -2,9 +2,6 @@
 //  UdacityAPI.swift
 //  OnTheMap
 //
-//  Created by Robert Garza on 1/10/16.
-//  Copyright © 2016 Robert Garza. All rights reserved.
-//
 
 import Foundation
 import UIKit
@@ -66,7 +63,7 @@ class UdacityAPI {
         task.resume()
     }
     
-    //MARK: Logout
+    //MARK: - Logout
     
     func logOut() {
         let request = NSMutableURLRequest(URL: NSURL(string: UdacityStrings.url)!)
@@ -84,13 +81,12 @@ class UdacityAPI {
             if error != nil { // Handle error…
                 return
             }
-            let newData = data!.subdataWithRange(NSMakeRange(5, data!.length - 5)) /* subset response data! */
-            print(NSString(data: newData, encoding: NSUTF8StringEncoding))
         }
         task.resume()
     }
     
-    //MARK: Get Data
+    //MARK: - Get Data
+    
     func getUserData(){
         let request = NSMutableURLRequest(URL: NSURL(string: UdacityStrings.queryUrl + studentKey)!)
         let session = NSURLSession.sharedSession()
@@ -127,7 +123,7 @@ class UdacityAPI {
     
     
     
-    //MARK: Shared Instance
+    //MARK: - Shared Instance
     
     class func sharedInstance() -> UdacityAPI {
         return sharedUdacity

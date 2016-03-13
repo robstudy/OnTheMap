@@ -2,9 +2,6 @@
 //  ParseAPI.swift
 //  OnTheMap
 //
-//  Created by Robert Garza on 2/18/16.
-//  Copyright © 2016 Robert Garza. All rights reserved.
-//
 
 import Foundation
 
@@ -31,7 +28,9 @@ class ParseAPI {
                 return
             }
             
-            self.parseStudentData(studentData!, comletion: {(success) in
+            let passDictionary = StudentInformation(completedDictionary: studentData!)
+            
+            self.parseStudentData(passDictionary.returnDictionary(), comletion: {(success) in
                 if success == true {
                     completion(success: true)
                     return
@@ -100,10 +99,19 @@ class ParseAPI {
                 return
             }
             
-            //Known Eror, results that return no data cause NSRangeException
-            
-            guard let queryObjectId = queryData?["results"]?[0]["objectId"] as? String else {
+            guard let queryArray = queryData!["results"] as? [[String: AnyObject]] else {
                 return
+            }
+            
+            var queryObjectId: String = ""
+            
+            if queryArray.count > 0 {
+                for result in queryArray {
+                    guard let objId = result["objectId"] as? String else {
+                        return
+                    }
+                    queryObjectId = objId
+                }
             }
             
             var httpMethod = ""

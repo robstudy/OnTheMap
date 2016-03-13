@@ -2,9 +2,6 @@
 //  ViewController.swift
 //  OnTheMap
 //
-//  Created by Robert Garza on 12/13/15.
-//  Copyright © 2015 Robert Garza. All rights reserved.
-//
 
 import UIKit
 
@@ -20,7 +17,8 @@ class LoginVC : UIViewController, UITextFieldDelegate {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
 
     private var udacitySignUp = "https://www.udacity.com/account/auth#!/signup"
-    //MARK: Load
+    
+    //MARK: - View Methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -77,7 +75,7 @@ class LoginVC : UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func faceBookLogin(sender: AnyObject) {
-        
+        //TODO: Implement Facebook login
     }
     
     @IBAction func becomeAMember(sender: AnyObject) {
@@ -92,20 +90,17 @@ class LoginVC : UIViewController, UITextFieldDelegate {
     
     //MARK: - TextField Delegate Methods
     
-    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
-        if(string == "\n"){
-            textField.resignFirstResponder()
-            return false
-        }
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
         return true
     }
     
-    func textFieldDidBeginEditing(textField: UITextField) {
-        if(textField.text == "Email" || textField.text == "Password"){
-            textField.text = ""
-        }
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        self.view.endEditing(true)
     }
 }
+
+//MARK: -
 
 extension LoginVC {
     
@@ -152,6 +147,7 @@ extension LoginVC {
         facebookLogInButton.layer.cornerRadius = 7
         facebookLogInButton.layer.borderWidth = 1
         facebookLogInButton.layer.borderColor = UIColor.blackColor().CGColor
+        facebookLogInButton.hidden = true
     }
     
     private func setTextViews() {

@@ -2,9 +2,6 @@
 //  ListVC.swift
 //  OnTheMap
 //
-//  Created by Robert Garza on 1/3/16.
-//  Copyright © 2016 Robert Garza. All rights reserved.
-//
 
 import UIKit
 
