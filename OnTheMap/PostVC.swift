@@ -8,7 +8,6 @@ import MapKit
 
 class PostVC: UIViewController, UITextFieldDelegate {
     
-    
     @IBOutlet weak var topView: UIView!
     @IBOutlet weak var middleView: UIView!
     @IBOutlet weak var bottomView: UIView!
@@ -41,7 +40,6 @@ class PostVC: UIViewController, UITextFieldDelegate {
     @IBAction func cancel(sender: UIButton) {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
-    
     
     @IBAction func locateOnTheMap(sender: UIButton) {
         let geo = CLGeocoder()
