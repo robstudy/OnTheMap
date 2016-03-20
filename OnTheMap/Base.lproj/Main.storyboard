@@ -538,6 +538,7 @@
                         <outlet property="mapView" destination="20u-7B-B4v" id="bGC-uH-mdE"/>
                         <outlet property="middleView" destination="3q4-hQ-gnT" id="apB-8P-tDV"/>
                         <outlet property="onTheMapButton" destination="nx9-47-KL1" id="ERL-XU-aDR"/>
+                        <outlet property="promptLabel" destination="epW-9D-rLP" id="2kU-C9-TAH"/>
                         <outlet property="submitButton" destination="8k5-kJ-mLS" id="HRg-qj-OH7"/>
                         <outlet property="topView" destination="LFb-Ml-p9X" id="k7N-tL-Hhc"/>
                         <outlet property="urlInputField" destination="UWj-KJ-xIq" id="1aq-JF-X7R"/>

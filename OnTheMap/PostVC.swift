@@ -15,6 +15,7 @@ class PostVC: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var locationInputField: UITextField!
     @IBOutlet weak var onTheMapButton: UIButton!
     @IBOutlet weak var submitButton: UIButton!
+    @IBOutlet weak var promptLabel: UILabel!
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var activityView: UIActivityIndicatorView!
     
@@ -43,10 +44,12 @@ class PostVC: UIViewController, UITextFieldDelegate {
     
     @IBAction func locateOnTheMap(sender: UIButton) {
         let geo = CLGeocoder()
+        toggleActivityView(true)
         if let local = locationInputField.text {
             geo.geocodeAddressString(local, completionHandler: { (placemark, error) in
                 if error != nil {
                     self.showAlert("Invalid location input", header: "An error occured!", addButton: nil, addReturnButton: true)
+                    self.toggleActivityView(false)
                     return
                 }
                 
@@ -61,6 +64,7 @@ class PostVC: UIViewController, UITextFieldDelegate {
                     self.studentLocationData = (lat, long, local)
                     
                     self.toggleMapView()
+                    self.toggleActivityView(false)
                 }
             })
         }
@@ -129,9 +133,11 @@ class PostVC: UIViewController, UITextFieldDelegate {
             if on {
                 self.activityView.startAnimating()
                 self.view.bringSubviewToFront(self.activityView)
+                self.toggleViewAlphas(true)
                 self.submitButton.enabled = false
             } else {
                 self.activityView.stopAnimating()
+                self.toggleViewAlphas(false)
                 self.submitButton.enabled = true
             }
         })
@@ -145,6 +151,22 @@ class PostVC: UIViewController, UITextFieldDelegate {
         submitButton.layer.cornerRadius = 7
         urlInputField.hidden = false
         locationInputField.hidden = true
+    }
+    
+    private func toggleViewAlphas(on: Bool) {
+        if on {
+            mapView.alpha = 0.5
+            topView.alpha = 0.5
+            middleView.alpha = 0.5
+            bottomView.alpha = 0.5
+            promptLabel.alpha = 0.5
+        } else {
+            mapView.alpha = 1
+            topView.alpha = 1
+            middleView.alpha = 1
+            bottomView.alpha = 1
+            promptLabel.alpha = 1
+        }
     }
     
     //MARK: - TextField Methods
