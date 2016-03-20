@@ -36,7 +36,6 @@ class ListVC: UITableViewController {
         })
     }
     
-    
     //MARK: TableView Functions
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -50,15 +49,14 @@ class ListVC: UITableViewController {
         return cell
     }
     
-    override func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
-        
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let studentMediaURL = students[indexPath.row].mediaURL
         
         if let mediaURL = NSURL(string: studentMediaURL) {
             if UIApplication.sharedApplication().canOpenURL(mediaURL) {
                 UIApplication.sharedApplication().openURL(mediaURL)
             } else {
-               showAlert()
+                showAlert()
             }
         }
     }

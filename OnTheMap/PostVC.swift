@@ -74,7 +74,16 @@ class PostVC: UIViewController, UITextFieldDelegate {
             return
         }
         
-        let submitttedStudent = Student(uniqueKey: studentInformation!.userKey, firstName: studentInformation!.firstName, lastName: studentInformation!.lastName, mediaURL: submitUrl, latitude: studentLocationData!.latitude, longitude: studentLocationData!.longitude, mapString: studentLocationData!.mapString)
+        let submittedStudentDictionary = ["uniqueKey": studentInformation!.userKey,
+            "firstName": studentInformation!.firstName,
+            "lastName": studentInformation!.lastName,
+            "mediaURL": submitUrl,
+            "latitude": studentLocationData!.latitude,
+            "longitude": studentLocationData!.longitude,
+            "mapString": studentLocationData!.mapString
+        ]
+        
+        let submitttedStudent = Student(data: submittedStudentDictionary)
         
         ParseAPI.sharedInstance().postStudentData(submitttedStudent, requestType: pushOrPut, updateOldData: update, objectId: objectId, completion:{
             (error, success) in
@@ -148,7 +157,6 @@ class PostVC: UIViewController, UITextFieldDelegate {
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         self.view.endEditing(true)
     }
-    
     
     //MARK: - Set up Fields
     

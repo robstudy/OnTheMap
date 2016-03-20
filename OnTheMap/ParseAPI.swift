@@ -14,7 +14,9 @@ class ParseAPI {
     //MARK: GET
     
     func getStudentData(completion: (success:Bool)->Void) {
-        let request = NSMutableURLRequest(URL: NSURL(string: ParseStrings.url)!)
+        
+        let url = ParseStrings.url + ParseStrings.params
+        let request = NSMutableURLRequest(URL: NSURL(string: url)!)
         request.addValue(ParseStrings.id, forHTTPHeaderField: ParseStrings.appID)
         request.addValue(ParseStrings.key, forHTTPHeaderField: ParseStrings.keyID)
         
@@ -131,7 +133,6 @@ class ParseAPI {
 
 extension ParseAPI {
     
-    
     //MARK: ParseJSON data
     
     private func parseStudentData(studentData: NSDictionary, comletion:(success:Bool)->Void){
@@ -143,35 +144,7 @@ extension ParseAPI {
         
         for result in sortedData {
             
-            guard let uniqueKey = result["uniqueKey"] as? String else {
-                return
-            }
-            
-            guard let firstName = result["firstName"] as? String else {
-                return
-            }
-            
-            guard let lastName = result["lastName"] as? String else {
-                return
-            }
-            
-            guard let mediaURL = result["mediaURL"] as? String else {
-                return
-            }
-            
-            guard let latitude = result["latitude"] as? Double else {
-                return
-            }
-            
-            guard let longitude = result["longitude"] as? Double else {
-                return
-            }
-            
-            guard let mapString = result["mapString"] as? String else {
-                return
-            }
-            
-            let studentInformation = Student(uniqueKey: uniqueKey, firstName: firstName, lastName: lastName, mediaURL: mediaURL, latitude: latitude, longitude: longitude, mapString: mapString)
+            let studentInformation = Student(data: result)
             
             StudentInformation.studentArray.append(studentInformation)
         }

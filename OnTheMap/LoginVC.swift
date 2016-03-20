@@ -27,11 +27,6 @@ class LoginVC : UIViewController, UITextFieldDelegate {
         setTextViews()
     }
     
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-
-    }
-    
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         

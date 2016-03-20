@@ -28,7 +28,6 @@ class TabBarVC: UITabBarController {
         dismissViewControllerAnimated(true, completion: nil)
     }
     
-    
     @IBAction func refresh(sender: AnyObject) {
         StudentInformation.studentArray = []
         ParseAPI.sharedInstance().getStudentData({(completion) in
@@ -52,7 +51,6 @@ class TabBarVC: UITabBarController {
             listVC.tableView.reloadData()
         }
     }
-    
     
     @IBAction func postLocation(sender: AnyObject) {
         let studentKey = UdacityAPI.sharedInstance().studentKey
@@ -81,7 +79,6 @@ class TabBarVC: UITabBarController {
             }
         })
     }
-
 
     // MARK: - Navigation
 

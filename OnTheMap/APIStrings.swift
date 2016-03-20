@@ -9,6 +9,7 @@ extension ParseAPI {
     
     struct ParseStrings {
         static let url = "https://api.parse.com/1/classes/StudentLocation"
+        static let params = "?limit=100&order=-updatedAt"
         static let id = "QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr"
         static let key = "QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY"
         static let appID = "X-Parse-Application-Id"

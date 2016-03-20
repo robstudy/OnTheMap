@@ -15,23 +15,13 @@ struct Student {
     let longitude: Double
     let mapString: String
     
-    init(uniqueKey: String) {
-        self.uniqueKey = uniqueKey
-        firstName = ""
-        lastName = ""
-        mediaURL = ""
-        latitude = 0
-        longitude = 0
-        mapString = ""
-    }
-    
-    init(uniqueKey: String, firstName: String, lastName: String, mediaURL: String, latitude: Double, longitude: Double, mapString: String){
-        self.uniqueKey = uniqueKey
-        self.firstName = firstName
-        self.lastName = lastName
-        self.mediaURL = mediaURL
-        self.latitude = latitude
-        self.longitude = longitude
-        self.mapString = mapString
+    init(data: NSDictionary) {
+        uniqueKey = data["uniqueKey"] as! String
+        firstName = data["firstName"] as! String
+        lastName = data["lastName"] as! String
+        mediaURL = data["mediaURL"] as! String
+        latitude = data["latitude"] as! Double
+        longitude = data["longitude"] as! Double
+        mapString = data["mapString"] as! String
     }
 }
